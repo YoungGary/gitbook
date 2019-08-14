@@ -1,0 +1,43 @@
+{
+    "title": "Gary的随笔",
+    "author": "Gary",
+    "description": "Gary的文档库. 里面包含了个人撰写的所有文章",
+    "language": "zh-hans",
+    "styles": {
+  
+    },
+    "plugins": [
+      "theme-comscore",
+      "prism",
+      "-highlight",
+      "copy-code-button",
+      "search-pro",
+      "-search",
+      "-lunr",
+      "expandable-chapters",
+      "splitter",
+      "-sharing",
+      "tbfed-pagefooter",
+    
+      "anchor-navigation-ex"
+    ],
+    "pluginsConfig": {
+      "prism": {
+        "css": [
+          "prismjs/themes/prism-solarizedlight.css"
+        ],
+        "lang": {
+          "shell": "bash"
+        }
+      },
+      "tbfed-pagefooter": {
+        "copyright":"Copyright &copy YoungGary 2019",
+        "modify_label": "该文件修订时间：",
+        "modify_format": "YYYY-MM-DD HH:mm:ss"
+      },
+      
+      "anchor-navigation-ex": {
+        "showLevel": false
+      }
+    }
+  }
