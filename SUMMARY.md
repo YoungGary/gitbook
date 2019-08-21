@@ -14,4 +14,5 @@
     * [2.两数相加](leetcode/2.md)
     * [3.无重复字符的最长子串](leetcode/3.md)
     * [4.寻找两个有序数组的中位数](leetcode/4.md)
-
+    * [5.最长回文子串](leetcode/5.md)
+    * [6.Z字形变换](leetcode/6.md)
