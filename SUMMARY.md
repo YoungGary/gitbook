@@ -25,3 +25,6 @@
     * [1.Dart语言](flutter/chapter1.md)
 * [TypeScript](ts/README.md)
     * [1.安装与上手](ts/1.md)
+    * [2.基础类型](ts/2.md)
+    * [3.接口](ts/3.md)
+    * [4.类](ts/4.md)
