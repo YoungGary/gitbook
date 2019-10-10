@@ -35,7 +35,7 @@ element-ui 组件的样式、公共样式都在 packages/theme-chalk 文件中�
 其中，updateVarible 是一个 POST 请求，他会把你修改的的主题配置提交到后端 server，提交的数据你可以自己去查看它的 Request Payload，这个 POST 请求会返回一段 CSS 文本，然后会动态插入到 head 标签的底部，来覆盖默认样式，你可以通过审查元素看到 head 底部会动态插入一个 id 为 chalk-style 的标签。
 
 相关代码在 examples/components/theme/loader/index.vue 中。
-```
+``` javascript
  onAction() {
       this.triggertProgressBar(true);
       const time = +new Date();
@@ -77,7 +77,7 @@ updateVars 请求在页面加载的时候会发起，在你修改完主题配置
 
 所有的国际化方案都会用到语言包，语言包通常会返回一个 JSON 格式的数据，element-ui 组件库的语言包在 src/locale/lang 目录下，以英语语言包为例：
 
-```
+``` javascript
 export default {
   el: {
     colorpicker: {
@@ -89,7 +89,7 @@ export default {
 }
 ```
 在 packages/color-picker/src/components/picker-dropdown.vue 中，我们在模板部分可以看到这个语言包的使用：
-```
+``` 
 <el-button
   size="mini"
   type="text"
@@ -106,7 +106,7 @@ export default {
 </el-button>
 ```
 模板中用到的 t 函数，它定义在 src/mixins/locale.js 中：
-```
+``` javascript
 export default {
   methods: {
     t(...args) {
@@ -116,7 +116,7 @@ export default {
 };
 ```
 实际上是在 src/locale/index.js 中定义的 t 函数：
-```
+``` javascript
 export const t = function(path, options) {
   let value = i18nHandler.apply(this, arguments);
   if (value !== null && value !== undefined) return value;
@@ -138,7 +138,7 @@ export const t = function(path, options) {
 
 这个函数是根据传入的 path 路径，比如我们例子中的 el.colorpicker.confirm，从语言包中找到对应的文案。其中 i18nHandler 是一个 i18n 的处理函数，这块逻辑就是用来兼容外部的 i18n 方案如 vue-i18n。
 
-```
+``` javascript
 let i18nHandler = function() {
   const vuei18n = Object.getPrototypeOf(this || Vue).$t;
   if (typeof vuei18n === 'function' && !!Vue.locale) {
@@ -162,14 +162,14 @@ export const use = function(l) {
 };
 
 ```
-可以看到 i18nHandler 默认会尝试去找 Vue 原型中的 $t 函数，这是 vue-i18@5.x 的实现，会在 Vue 的原型上挂载 $t 方法。
+可以看到 i18nHandler 默认会尝试去找 Vue 原型中的 t 函数，这是 vue-i18@5.x 的实现，会在 Vue 的原型上挂载 t 方法。
 
 另外它也暴露了 i18n 方法，可以外部传入其它的 i18n 方法，覆盖 i18nHandler。
 
 如果没有外部提供的 i18n 方法，那么就直接找到当前的语言包 let current = lang;，接下来的逻辑就是从这个语言包对象中读到对应的字符串值，当然如果字符串需要格式化则调用 format 函数，这块逻辑同学们感兴趣可以自己看。
 
 因此在使用对应的语言包的时候一定要注册：
-```
+``` javascript
 import lang from 'element-ui/lib/locale/lang/en'
 import locale from 'element-ui/lib/locale'
 
@@ -187,7 +187,7 @@ element-ui 的文档和 demo 是融为一体的，我们打开它的文档，可
 element-ui 的 demo 源码都在 examples 目录中维护，当我们在 element-ui 工程下运行 npm run dev 的时候，会启动它的开发调试模式，并且运行官方文档和 demo。
 
 看一下 npm scripts：
-```
+``` 
 "scripts": {
     "bootstrap": "yarn || npm i",
     "build:file": "node build/bin/iconInit.js & node build/bin/build-entry.js & node build/bin/i18n.js & node build/bin/version.js",
@@ -197,7 +197,7 @@ element-ui 的 demo 源码都在 examples 目录中维护，当我们在 element
 ```
 我们省略了其它的 scripts，重点看 dev 和相关的几个命令，其中 bootstrap 的作用是安装依赖，build:file 的作用是运行 build 目录下几个命令，包括对 icon、entry、i18n、version 等初始化。在执行完 bootstrap 和 build:file 后，通过 webpack-dev-server 运行 build/webpack.demo.js，这个是重点，我们来看一下这个 webpack 的配置文件。
 
-```
+``` javascript
 const webpackConfig = {
   mode: process.env.NODE_ENV,
   entry: isProd ? {
@@ -256,7 +256,7 @@ const webpackConfig = {
 由于整个配置文件内容比较长，我只保留了重点的部分，重点看一下 entry 和 module 下的 rules。
 
 element-ui 官网本质上就是一个用 vue 开发的应用，当我们运行 npm run dev 的时候，入口文件是 examples 目录下的 entry.js：
-```
+``` javascript
 import Vue from 'vue';
 import entry from './app';
 import VueRouter from 'vue-router';
@@ -332,7 +332,7 @@ new Vue({ // eslint-disable-line
 
 这里我们要重点关注路由部分，路由的配置都在 examples/route.config.js 中：
 
-```
+``` javascript
 import navConfig from './nav.config';
 import langs from './i18n/route';
 
@@ -532,7 +532,7 @@ registerRoute 函数内部就是遍历 navConfig，根据它内部元素的数�
 
 我们知道 Vue Router 的本质是根据不同的 URL path，router-view 组件映射到对应的路由组件，对于每一个组件的路由，都是通过 addRoute(nav, lang, index) 方法生成的，该方法内部又调用了 loadDocs(lang, page.path) 获取到对应的路由组件。
 
-```
+``` javascript
 const loadDocs = function(lang, path) {
   return LOAD_DOCS_MAP[lang](path);
 };
@@ -567,7 +567,7 @@ const LOAD_DOCS_MAP = {
 
 我们知道，webpack 的理念是一切资源都可以 require，只要配置了对应的 loader。回到 build/webpack.demo.js，我们发现对于 .md 文件我们配置了相应的 loader：
 
-```
+``` javascript
  {
     test: /\.md$/,
     use: [
@@ -588,7 +588,7 @@ const LOAD_DOCS_MAP = {
 ```
 对于 .md 文件，这里 use 数组中配置了 2 项，它们执行顺序是逆序的，也就是先执行 md-loader，再执行 vue-loader，md-loader 的代码在 build/md-loader/index.js 中：
 
-```
+``` javascript
 const {
   stripScript,
   stripTemplate,
@@ -662,7 +662,7 @@ webpack loader 的原理很简单，输入是文件的原始内容，返回的�
 
 我们来简单看一下 md-loader 中间处理过程。首先执行了 md.render(source) 对 md 文档解析，提取文档中 :::demo {content} ::: 内容，分别生成一些 Vue 的模板字符串，然后再从这个模板字符串中循环查找 <!--element-demo: 和 :element-demo--> 包裹的内容，从中提取模板字符串到 output 中，提取 script 到 componenetsString 中，然后构造 pageScript，最后返回的内容就是：
 
-```
+``` javascript
 return `
     <template>
       <section class="content element-doc">
@@ -710,7 +710,7 @@ npm i element-ui -S
 完整引入的好处是方便，只需要 2 行代码就可以完整地使用 element-ui 所有的组件，但缺点也很明显，引入的组件包体积很大，通常一个项目也用不到所有的组件，会有资源浪费。
 
 因此最佳实践就是按需引入：
-```
+``` javascript
 import Vue from 'vue'
 import { Button } from 'element-ui'
 
@@ -720,7 +720,7 @@ Vue.component(Button.name, Button)
 
 其实官网已经有答案了，在使用按需引入的时候，要借助 babel-plugin-component 这个 webpack 插件，并且配置 .babelrc：
 
-```
+``` javascript
 {
   "presets": [["es2015", { "modules": false }]],
   "plugins": [
@@ -736,7 +736,7 @@ Vue.component(Button.name, Button)
 
 ```
 实际上它是把 import { Button } from 'element-ui' 转换成：
-```
+``` javascript
 var button = require('element-ui/lib/button')
 require('element-ui/lib/theme-chalk/button.css')
 ```
@@ -744,12 +744,12 @@ require('element-ui/lib/theme-chalk/button.css')
 
 element-ui 这种按需引入的方式虽然方便，但背后却要解决几个问题，由于我们支持每个组件可以单独引入，那么如果产生了组件依赖并且同时按需引入的时候，代码冗余问题怎么解决。举个例子，在 element-ui 中，Table 组件依赖了 CheckBox 组件，那么当我同时引入了 Table 组件和 CheckBox 组件的时候，会不会产生代码冗余呢？
 
-```
+``` javascript
 import { Table, CheckBox } from 'element-ui'
 ```
 如果你不做任何处理的话，答案是会，你最终引入的包会有 2 份 CheckBox 的代码。那么 element-ui 是怎么解决这个问题的呢？实际上只是部分解决了，它的 webpack 配置文件中配置了 externals，在 build/config.js 中我们可以看到这些具体的配置：
 
-```
+``` javascript
 var externals = {};
 
 Object.keys(Components).forEach(function(key) {
@@ -779,7 +779,7 @@ externals 可以防止将这些 import 的包打包到 bundle 中，并在运行
 
 我们来看一下打包后的 lib/table.js，我们可以看到编译后的 table.js 对 CheckBox 组件的依赖引入：
 
-```
+``` javascript
 module.exports = require("element-ui/lib/checkbox");
 ```
 这么处理的话，就不会打包生成 2 份 CheckBox JS 部分的代码了，但是对于 CSS 部分，element-ui 并未处理冗余情况，可以看到 lib/theme-chalk/checkbox.css 和 lib/theme-chalk/table.css 中都会有 CheckBox 组件的 CSS 样式。

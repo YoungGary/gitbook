@@ -14,7 +14,7 @@
 实现一个响应式的核心函数命名为 reactive， 这个函数返回一个被代理之后的结果，可以通过操作这个返回结果来触发响应式。
 比如实现一个有 name 属性的对象 obj，我们希望经过 reactive 函数处理之后返回一个新对象 proxyObj，我们像操作 obj 一样操作 proxyObj 对象。
 
-```
+``` javascript
 let obj = {
     name: 'test name'
 }
@@ -25,7 +25,7 @@ let proxyObj = reactive(obj);
 
 其次：设置一个函数用来模拟响应式过程，省略掉更新dom的操作 这里用一句话来代替模拟一下。
 
-```
+``` javascript
 // 提示视图需要更新
 function trigger() {
     console.log('视图需要更新');
@@ -37,7 +37,7 @@ function trigger() {
 首先明确 reactive 函数接收一个参数，需要对这个参数进行代理，并返回代理后的结果。如果参数是对象才需要代理，否则直接返回。
 
 这里需要建立一个辅助函数用来判断一个变量是否是对象：
-```
+``` javascript
 function isObject(param) {
     return typeof param === 'object' && param !== null;
 }
@@ -46,7 +46,7 @@ function isObject(param) {
 ### 主体函数
 使用 Proxy 时需要定义一个代理对象 handler 来对目标进行代理操作，这个对象主要有两个方法，即 get 和 set, 分别为 获取和设置属性值的时候触发。同时在内部的实现需要利用到 Reflect对象， 详情见下面的代码。
 
-```
+``` javascript
 /* 返回一个被代理后的结果，通过操作这个结果可以来实现响应式, 例如视图更新 */
 function reactive(target) {
     // 如果是个对象，则返回被代理后的结果，如果不是则直接返回
@@ -72,7 +72,7 @@ function reactive(target) {
 }
 ```
 现在我们修改 proxyObj 的name属性，发现会触发了最基本的响应式：
-```
+``` javascript
 let obj = {
     name: 'jjjs'
 }
@@ -88,20 +88,20 @@ console.log(proxyObj.name);
 
 ```
 而且可以对本来不存在的属性进行监控：
-```
+``` javascript
 proxyObj.age = 6;
 console.log(proxyObj.age);
 //视图需要更新
 //6
 ```
 但是当我们想处理一个数组时，却发现会触发两次视图更新提示：
-```
+``` javascript
 let array = [1,2,3];
 let obArray = reactive(array);
 obArray.push(4)  // --结果会出现2次   视图需要更新
 ```
 这个时候对reactive代码进行修改，输出set动作中每次的 key, 观察是哪个键使得函数触发了两次
-```
+``` javascript
 function reactive(target) {
     // ...
         set(target, key, value, receiver) {
@@ -116,7 +116,7 @@ function reactive(target) {
 ```
 可以看出当监视数组时，数组下标的更新会触发一次，而数组length的更新也会进行触发，这就是二次触发的原因。
 但我们是不需要在 length 更新时对视图进行更新的，所以需要对这里的逻辑进行修改：只对私有属性的修改动作触发视图更新。
-```
+``` javascript
 function reactive(target) {
     const handler = {
         // ...
@@ -131,9 +131,9 @@ function reactive(target) {
     };
     // ...
 }
-```
+``` 
 当需要对嵌套的对象进行获取时，例如：
-```
+``` javascript
 // 对于嵌套的对象
 var obj = {
     name: 'jjjs',
@@ -144,7 +144,7 @@ var proxyObj = reactive(obj);
 proxyObj.array.push(4);
 ```
 此时会发现，并不会触发视图需要更新的提示，这时需要对对象进行递归处理：
-```
+``` javascript
 function reactive(target) {
 // ...
     const handler = {
@@ -163,7 +163,7 @@ function reactive(target) {
 
 ```
 然而，当多次获取代理结果时，会出现多次触发代理的情况：
-```
+``` javascript
 function reactive(target) {
 // ...
     console.log('走代理');
@@ -189,7 +189,7 @@ var proxyObj = reactive(obj);
 >A:weakmap是弱类型可以直接被回收
 
 现在对代码进行修改，增加一个缓存对象：
-```
+``` javascript
 const toProxy = new WeakMap(); // 用来保存代理后的对象
 
 function reactive(target) {
@@ -207,12 +207,12 @@ function reactive(target) {
     return observed;
 }
 
-```
+``` 
 发现对同一个对象只走了一次代理，这正是我们期望的结果。
 
 ### 完整代码
 
-```
+``` javascript
 /* demo.js */
 
 // 定义一个缓存对象
