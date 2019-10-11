@@ -23,7 +23,7 @@
     * [14.最长公共前缀](leetcode/14.md)
 * [Flutter从入门到放弃](flutter/README.md)
     * [1.Dart语言](flutter/chapter1.md)
-    <!-- * [2.Flutter技术初探](flutter/chapter2.md) -->
+    * [2.Flutter 技术总结](flutter/chapter2.md)
 * [TypeScript系列](ts/README.md)
     * [1.安装与上手](ts/1.md)
     * [2.基础类型](ts/2.md)
