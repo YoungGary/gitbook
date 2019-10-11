@@ -23,7 +23,7 @@ let proxyObj = reactive(obj);
 ```
 例如：当修改 proxyObj.name 时会触发响应式。
 
-其次：设置一个函数用来模拟响应式过程，省略掉更新dom的操作 这里用一句话来代替模拟一下。
+其次：设置一个函数用来模拟响应式过程，这里省略掉更新dom的操作,用打印一句话来代替模拟一下。
 
 ``` javascript
 // 提示视图需要更新
@@ -103,6 +103,7 @@ obArray.push(4)  // --结果会出现2次   视图需要更新
 这个时候对reactive代码进行修改，输出set动作中每次的 key, 观察是哪个键使得函数触发了两次
 ``` javascript
 function reactive(target) {
+    const handler = {
     // ...
         set(target, key, value, receiver) {
             trigger();
@@ -183,7 +184,7 @@ var proxyObj = reactive(obj);
 ```
 这种情况是我们不希望有的，我们希望对同一个对象仅做一次代理。这个时候，我们需要对已经代理过的对象进行缓存，一次在进行代理之前查询缓存判断是否已经经过了代理，只有没有经过代理的对象才走一次代理。
 
-最适合当做缓存容器的对象是 WeakMap， 这是由于它对于对象的弱引用特性。
+最适合当做缓存容器的对象是 WeakMap， 这是由于它对于对象的弱引用特性，vue3中也是使用了weakmap来维护。
 
 >Q:为什么用weekmap而不是map?
 >A:weakmap是弱类型可以直接被回收
