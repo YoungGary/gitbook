@@ -64,7 +64,7 @@ console.log(person.__proto__ === Person.prototype); // true
 
 于是我们更新下关系图：
 
-![实例与实例原型的关系图](https://i.loli.net/2019/10/24/bMav3xYLy8CRNOo.png)
+![实例与实例原型的关系图](https://i.loli.net/2019/10/24/wPL5r9ajEtGuhKZ.png)
 
 既然实例对象和构造函数都可以指向原型，那么原型是否有属性指向构造函数或者实例呢？
 
@@ -142,7 +142,7 @@ console.log(obj.name) // Kevin
 
 所以原型对象是通过 Object 构造函数生成的，结合之前所讲，实例的 \_\_proto\_\_ 指向构造函数的 prototype ，所以我们再更新下关系图：
 
-![原型的原型关系图](https://i.loli.net/2019/10/24/mTEvQXyRair7FC6.png)
+![原型的原型关系图](https://i.loli.net/2019/10/24/bMav3xYLy8CRNOo.png)
 
 ## 原型链
 
