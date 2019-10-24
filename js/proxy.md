@@ -1,15 +1,121 @@
-# Vue.js 3 中使用 Proxy 实现响应式
+# Vue.js 3.0 中使用 Proxy 实现响应式
 
-## 前言
+## 前言 
 
 10月5号凌晨，尤雨溪公布了 Vue 3 的[源代码](https://github.com/vuejs/vue-next)，目前的版本是 Pre-Alpha 。
 我们知道Vue 的核心之一就是响应式系统，通过侦测数据的变化，来驱动更新视图。在Vue.js 2的版本中是通过 Object.defineProperty()函数来实现的响应式。大家早就得知在Vue新版的响应式是用 Proxy 实现的，现在我们来利用 Proxy 实现一个基本的响应式骨架。
 
-## 基础
 
-关于 Proxy 的基础知识，可以去MDN学习直达[链接](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
+## vue2.0响应式回顾
+vue2.0中使用Object.defineProperty()函数来实现的响应式。重新定义属性 给属性增加setter 和getter 方法
+``` js
+ function updateView(){
+     console.log('update view')
+ }
+ function observe(obj){
+     if(typeof obj !== 'object' || data == null){
+         return obj
+     }
+     for(let key in obj){
+         defineObserve(obj,key,data[key])
+     }
+ }
 
-## 实现目标
+ function defineObserve(obj,key,value){
+     Object.defineProperty(obj,key,{
+         set(newVal){
+             if(newVal !== value){
+                 updateView()
+                 value = newValue
+             }
+         },
+         get(){
+             return value
+         }
+     })
+ }
+
+ //example
+ let data = {name:'123'}
+ observe(data)
+ data.name = '456'
+```
+这样是完整了初步的响应式 改变数据的时候 触发更新试图的方法 数据也发生了改变，但是如果对象中有嵌套的属性呢，例如：
+``` js
+let data = {name:'123',age:{n:111}}
+ data.age.n = 123456
+```
+``` js
+let data = {name:'123',age:{n:111}}
+data.age ={n:200}
+data.age.n = 123456
+```
+这两种情况下 上述代码就无法满足要求了 就得使用递归的方法 去观察value
+``` js
+function updateView(){
+     console.log('update view')
+ }
+ function observe(obj){
+     if(typeof obj !== 'object' || data == null){
+         return obj
+     }
+     for(let key in obj){
+         defineObserve(obj,key,data[key])
+     }
+ }
+
+ function defineObserve(obj,key,value){
+     //添加递归
+     observe(value)
+     Object.defineProperty(obj,key,{
+         set(newVal){
+             if(newVal !== value){
+                 //添加递归
+                 observe(newVal)
+                 updateView()
+                 value = newValue
+             }
+         },
+         get(){
+             return value
+         }
+     })
+ }
+
+ //example
+let data = {name:'123',age:{n:111}}
+ observe(data)
+ data.age ={n:200}
+ data.age.n = 123456
+```
+那么对象层级非常的深，递归会导致性能不好。
+问题2：如果对象的属性不存在 新增的属性也是没有响应式的
+问题3：如果对象的属性值是数组类型，那么也不会触发响应式。这时候要对数组上的方法进行重写 push shift。。。
+例如：
+``` js
+let oldproto = Array.prototype;
+let proto = Object.create(oldproto)
+['push','shift','unshift'].forEach(function(method){
+    proto[method] = function(){
+        updateView();
+        
+        oldproto[method].call(this,...arguments)
+    }
+})
+//在observe方法
+if(Array.isArray(obj)){
+    obj.__proto__ = proto;
+}
+
+```
+
+## proxy基础
+
+关于 Proxy 的基础知识，可以去MDN学习。[链接](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
+
+
+
+## 实现目标 
 
 实现一个响应式的核心函数命名为 reactive， 这个函数返回一个被代理之后的结果，可以通过操作这个返回结果来触发响应式。
 比如实现一个有 name 属性的对象 obj，我们希望经过 reactive 函数处理之后返回一个新对象 proxyObj，我们像操作 obj 一样操作 proxyObj 对象。
@@ -57,6 +163,7 @@ function reactive(target) {
     // 这个对象主要有两个方法，即 get 和 set
     const handler = {
         get(target, key, receiver) {
+
             return Reflect.get(target, key, receiver); // 相当于 return target[key]
         },
         set(target, key, value, receiver) {
@@ -179,20 +286,25 @@ var proxyObj = reactive(obj);
 var proxyObj = reactive(obj);
 var proxyObj = reactive(obj);
 var proxyObj = reactive(obj);
+//=>结果输出 4次 走代理
 
-//结果输出 4次 走代理
+//代理被代理过的对象
+reactive(proxyObj)
+reactive(proxyObj)
+reactive(proxyObj)
+reactive(proxyObj)
 ```
-这种情况是我们不希望有的，我们希望对同一个对象仅做一次代理。这个时候，我们需要对已经代理过的对象进行缓存，一次在进行代理之前查询缓存判断是否已经经过了代理，只有没有经过代理的对象才走一次代理。
+上述两种情况是我们不希望有的，我们希望对同一个对象仅做一次代理。这个时候，我们需要对已经代理过的对象进行缓存，一次在进行代理之前查询缓存判断是否已经经过了代理，只有没有经过代理的对象才走一次代理。
 
 最适合当做缓存容器的对象是 WeakMap， 这是由于它对于对象的弱引用特性，vue3中也是使用了weakmap来维护。
 
 >Q:为什么用weekmap而不是map?
 >A:weakmap是弱类型可以直接被回收
 
-现在对代码进行修改，增加一个缓存对象：
+现在对代码进行修改，增加缓存对象：
 ``` javascript
-const toProxy = new WeakMap(); // 用来保存代理后的对象
-
+const toProxy = new WeakMap(); // 用来保存   原对象=>代理后的对象
+const toRaw = new WeakMap();    //代理后的对象=>原对象
 function reactive(target) {
     // ...
     if(toProxy.get(target)) { // 判断对象是否已经被代理了
@@ -225,18 +337,19 @@ function reactive(target) {
     if(!isObject(target)) {
         return target;
     }
-    
+    // 判断对象是否已经被代理了
     if(toProxy.get(target)) {
         return toProxy.get(target);
     }
-
+    if(toRaw.has(target)){  //防止多次代理
+        return target
+    }
     const handler = {
         get(target, key, receiver) {
             const proxyTarget =  Reflect.get(target, key, receiver); // 相当于 return target[key]
             if(isObject(target[key])) {
                 return reactive(proxyTarget);
             }
-
             return proxyTarget;
         },
         set(target, key, value, receiver) {
@@ -252,7 +365,7 @@ function reactive(target) {
     let observed = new Proxy(target, handler);
 
     toProxy.set(target, observed); // 保存已代理的对象
-
+    toProxy.set(observed, target); 
     return observed;
 }
 
@@ -321,6 +434,56 @@ var proxyObj = reactive(obj);
 </html>
 ```
 
+<!-- # 依赖收集
+
+依赖收集.也就是发布订阅模式。在Vue 3中 有一个函数effect 就是在reactive函数执行后会立即执行一次effect方法.
+effect 例子：
+``` js
+//栈
+let effectStack = [];
+
+
+function effect(fn){
+    //需要把fn 的函数变成响应式的函数
+    let effect = createEffect(fn);
+    //默认执行一次
+    effect();
+}
+function createEffect(fn){
+    let effect = function(){ //创建响应式的effect
+        return run(effect,fn)// 让fn 执行 把 effect 存到栈中
+    }
+    return effect
+}
+
+function run(effect,fn){
+    effectStack.push(effect)
+    fn()
+}
+//在proxy的get方法中收集依赖
+ get(target, key, receiver) {
+    const proxyTarget =  Reflect.get(target, key, receiver); // 相当于 return target[key]
+
+    //收集依赖 把key  和effect 对应
+    track(target,key)  //如果目标上这个值变化了重新让数组中的effect执行
+
+
+    if(isObject(target[key])) {
+        return reactive(proxyTarget);
+    }
+    return proxyTarget;
+},
+
+function track(target,key){
+    let effect = 
+}
+
+let obj = reactive({name:'123'})
+effect(()=>{ //effect 会默认执行一次 然后等到依赖的数据变化了 会再执行一次
+    console.log(obj.name)
+})
+obj.name = '456'
+``` -->
 
 
 
