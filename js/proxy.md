@@ -1,9 +1,9 @@
-# Vue.js 3.0 中使用 Proxy 实现响应式
+# Vue2.0和Vue.js 3.0 中实现响应式的方式分析
 
 ## 前言 
 
 10月5号凌晨，尤雨溪公布了 Vue 3 的[源代码](https://github.com/vuejs/vue-next)，目前的版本是 Pre-Alpha 。
-我们知道Vue 的核心之一就是响应式系统，通过侦测数据的变化，来驱动更新视图。在Vue.js 2的版本中是通过 Object.defineProperty()函数来实现的响应式。大家早就得知在Vue新版的响应式是用 Proxy 实现的，现在我们来利用 Proxy 实现一个基本的响应式骨架。
+我们知道Vue 的核心之一就是响应式系统，通过侦测数据的变化，来驱动更新视图。在Vue.js 2的版本中是通过 Object.defineProperty()函数来实现的响应式。大家早就得知在Vue新版的响应式是用 Proxy 实现的，现在我们来利用 Object.defineProperty()和 Proxy 实现一个基本的响应式骨架。
 
 
 ## vue2.0响应式回顾
