@@ -1,0 +1,625 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>JavaScript进阶 · Gary的小窝</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Gary">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-comscore/test.css">
+                
+            
+        
+
+    
+
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="proxy.html" />
+    
+    
+    <link rel="prev" href="../ts/4.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    写在前面
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../leetcode/">
+            
+                <a href="../leetcode/">
+            
+                    
+                    Leetcode之旅
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../leetcode/1.html">
+            
+                <a href="../leetcode/1.html">
+            
+                    
+                    1.两数之和
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../leetcode/2.html">
+            
+                <a href="../leetcode/2.html">
+            
+                    
+                    2.两数相加
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../leetcode/3.html">
+            
+                <a href="../leetcode/3.html">
+            
+                    
+                    3.无重复字符的最长子串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../leetcode/4.html">
+            
+                <a href="../leetcode/4.html">
+            
+                    
+                    4.寻找两个有序数组的中位数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../leetcode/6.html">
+            
+                <a href="../leetcode/6.html">
+            
+                    
+                    6.Z字形变换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../leetcode/9.html">
+            
+                <a href="../leetcode/9.html">
+            
+                    
+                    9.回文数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../leetcode/11.html">
+            
+                <a href="../leetcode/11.html">
+            
+                    
+                    11.盛最多水的容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../leetcode/12.html">
+            
+                <a href="../leetcode/12.html">
+            
+                    
+                    12.整数转罗马数字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../leetcode/13.html">
+            
+                <a href="../leetcode/13.html">
+            
+                    
+                    13.罗马数字转整数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="../leetcode/14.html">
+            
+                <a href="../leetcode/14.html">
+            
+                    
+                    14.最长公共前缀
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../flutter/">
+            
+                <a href="../flutter/">
+            
+                    
+                    Flutter从入门到放弃
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../flutter/chapter1.html">
+            
+                <a href="../flutter/chapter1.html">
+            
+                    
+                    1.Dart语言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../flutter/chapter2.html">
+            
+                <a href="../flutter/chapter2.html">
+            
+                    
+                    2.Flutter 技术总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../ts/">
+            
+                <a href="../ts/">
+            
+                    
+                    TypeScript系列
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../ts/1.html">
+            
+                <a href="../ts/1.html">
+            
+                    
+                    1.安装与上手
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../ts/2.html">
+            
+                <a href="../ts/2.html">
+            
+                    
+                    2.基础类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../ts/3.html">
+            
+                <a href="../ts/3.html">
+            
+                    
+                    3.接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../ts/4.html">
+            
+                <a href="../ts/4.html">
+            
+                    
+                    4.类
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.5" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    JavaScript进阶
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="proxy.html">
+            
+                <a href="proxy.html">
+            
+                    
+                    1.Vue.js 3.0中的响应式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="el.html">
+            
+                <a href="el.html">
+            
+                    
+                    2.Element UI 源码初探
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="bind.html">
+            
+                <a href="bind.html">
+            
+                    
+                    3.bind的模拟实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="proto.html">
+            
+                <a href="proto.html">
+            
+                    
+                    4.JS原型和原型链
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../life/">
+            
+                <a href="../life/">
+            
+                    
+                    网事杂谈
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../life/1.html">
+            
+                <a href="../life/1.html">
+            
+                    
+                    1.周杰伦专辑赏析--叶惠美
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../life/2.html">
+            
+                <a href="../life/2.html">
+            
+                    
+                    2.周杰伦专辑赏析--七里香
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >JavaScript进阶</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#javascript&#x8FDB;&#x9636;&#x7CFB;&#x5217;&#x6587;&#x7AE0;"><b></b>JavaScript&#x8FDB;&#x9636;&#x7CFB;&#x5217;&#x6587;&#x7AE0;</a></li></ul></div><a href="#javascript&#x8FDB;&#x9636;&#x7CFB;&#x5217;&#x6587;&#x7AE0;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="javascript&#x8FDB;&#x9636;&#x7CFB;&#x5217;&#x6587;&#x7AE0;"><a name="javascript&#x8FDB;&#x9636;&#x7CFB;&#x5217;&#x6587;&#x7AE0;" class="anchor-navigation-ex-anchor" href="#javascript&#x8FDB;&#x9636;&#x7CFB;&#x5217;&#x6587;&#x7AE0;"><i class="fa fa-link" aria-hidden="true"></i></a>JavaScript&#x8FDB;&#x9636;&#x7CFB;&#x5217;&#x6587;&#x7AE0;</h1>
+<footer class="page-footer"><span class="copyright">Copyright &#xA9; YoungGary 2019 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x4EF6;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
+2019-10-13 21:54:32
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../ts/4.html" class="navigation navigation-prev " aria-label="Previous page: 4.类">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="proxy.html" class="navigation navigation-next " aria-label="Next page: 1.Vue.js 3.0中的响应式">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"JavaScript进阶","level":"1.5","depth":1,"next":{"title":"1.Vue.js 3.0中的响应式","level":"1.5.1","depth":2,"path":"js/proxy.md","ref":"js/proxy.md","articles":[]},"previous":{"title":"4.类","level":"1.4.4","depth":2,"path":"ts/4.md","ref":"ts/4.md","articles":[]},"dir":"ltr"},"config":{"plugins":["theme-comscore","prism","-highlight","copy-code-button","search-pro","-search","-lunr","expandable-chapters","splitter","-sharing","tbfed-pagefooter","anchor-navigation-ex"],"styles":{},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy YoungGary 2019","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"shell":"bash"}},"splitter":{},"search-pro":{},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":false},"theme-comscore":{},"copy-code-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"theme":"default","author":"Gary","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Gary的小窝","language":"zh-hans","gitbook":"*","description":"Gary的小窝. 里面包含了个人撰写的技术文章"},"file":{"path":"js/README.md","mtime":"2019-10-13T13:54:32.291Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-10-24T15:16:38.399Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-comscore/test.js"></script>
+        
+    
+
+    </body>
+</html>
+
