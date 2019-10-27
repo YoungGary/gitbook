@@ -34,6 +34,7 @@
     * [2.Element UI 源码初探](js/el.md)
     * [3.bind的模拟实现](js/bind.md)
     * [4.JS原型和原型链](js/proto.md)
+    * [5.Vue cli3 库模式搭建组件库并发布到 npm](js/ui.md)
 * [网事杂谈](life/README.md)
     * [1.周杰伦专辑赏析--叶惠美](life/1.md)
     * [2.周杰伦专辑赏析--七里香](life/2.md)
