@@ -7,7 +7,7 @@
 
  ## Flutter 是什么
 
- >Flutter is Google’s UI toolkit for building beautiful, natively compiled applications for mobile, web, and desktopfrom a single codebase.
+ >Flutter is Google’s UI toolkit for building beautiful, natively compiled applications for mobile, web, and desktop from a single codebase.
 
 Flutter是由原 Google Chrome 团队成员，利用 Chrome 2D 渲染引擎，然后精简 CSS 布局演变而来。架构图如下图
 
