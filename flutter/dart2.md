@@ -2,7 +2,8 @@
 
 ### 类的简单介绍
 
-* 创建一个类和创建类的实例
+创建一个类和创建类的实例
+
 ``` dart
 void test1(){
   Dog d = new Dog();
@@ -26,7 +27,9 @@ class Cat {
 ```
 
 ### 构造函数
+
 普通构造函数
+
 ``` dart
 var cat = new Cat("逗比", 12);
 
@@ -41,9 +44,11 @@ class Cat {
 }
 
 ```
+
 命名构造函数
 
 给构造函数提供了名称，这样做使得不同的构造函数变的更加清晰。
+
 ``` dart
 Map map = new Map();
 map['name']= "哈巴狗";
@@ -92,9 +97,11 @@ class Pug extends Dog {
 }
 
 ```
+
 也可以通过this关键字，在冒号之后调用同一个类中的其他构造函数。
 
 定义了两个命名构造函数，他们只需要dog的名字，然后调用Pug的默认构造函数
+
 ``` dart
 Pug p = new Pug.small('哈哈哈');
 print(p.name);
@@ -122,9 +129,11 @@ class Pug extends Dog {
 ```
 
 ### 重载和重写
-* 方法重写
+
+方法重写
 
 代码如下，最后打印值是：你真是个逗比
+
 ``` dart
 Pug p = new Pug();
 print(p.bark());
@@ -145,9 +154,11 @@ class Pug extends Dog {
 ```
 
 ### 抽象类
+
 * 可以通过abstract关键字声明抽象类
 
 * 只需要在类声明前添加abstract关键字，方法不需要。方法只需要签名，不需要实现。
+
 ``` dart
 abstract class AbstractDog {
   void eat();
@@ -172,6 +183,7 @@ class SmallDog extends AbstractDog{
 
 * 默认类中的所有属性和方法是public的。在dart中，可以在属性和方法名前添加“_”使私有化。现在让我们使name属性私有化。
 * 可以发现，调用私有化变量或者方法的时候会出现红色警告
+
 ``` dart
   void test() {
     Dog d = new Dog('哈巴狗', 5);
@@ -181,7 +193,9 @@ class SmallDog extends AbstractDog{
   }
 
 ```
+
 Dog代码如下所示
+
 ``` dart
 class Dog {
   String _name;
@@ -212,8 +226,11 @@ class Dog {
 }
 
 ```
+
 ### 静态方法
+
 如果想让方法或者属性静态化，只需要在声明前添加static关键字。
+
 ``` dart
 void test() {
   Dog.bark();
@@ -227,8 +244,11 @@ class Dog {
 }
 
 ```
+
 ### 泛型
+
 dart全面支持泛型。假设你想在你定义的类中，想持有任意类型的数据。
+
 ``` dart
 DataHolder<String> dataHolder = new DataHolder('Some data');
 print(dataHolder.getData());
@@ -237,7 +257,6 @@ print(dataHolder.getData());
 //下面这个会报错，因为dataHolder对象在创建的时候就已经限制为String类型
 dataHolder.setData(123);
 print(dataHolder.getData());
-
 
 class DataHolder<T> {
   T data;
@@ -254,7 +273,9 @@ class DataHolder<T> {
 }
 
 ```
+
 ### async/await介绍
+
 思考一下，看了上面的案例，对于future的预期行为，如果我们希望在执行其他语句之前，先执行future，该怎么操作呢？
 
 这就需要用到需要用到async/await。在test函数的花括号开始添加async关键字。我们添加await关键字在调用getTest方法之前，他所做的就是在future返回值之后，继续往下执行。我们将整个代码包裹在try-catch中，我们想捕获所有的异常，和之前使用catchError回调是一样。使用awiat关键字，必须给函数添加async关键字，否则没有效果。
@@ -282,8 +303,11 @@ class DataHolder<T> {
   2019-06-21 17:32:37.702 16501-16583/com.hwmc.auth I/flutter: 测试----------逗比是这个先执行吗
 
 ```
+
 ### 看一个案例
+
 一个 async 方法 是函数体被标记为 async 的方法。 虽然异步方法的执行可能需要一定时间，但是 异步方法立刻返回 - 在方法体还没执行之前就返回了
+
 ``` dart 
 void getHttp async {
     // TODO ---
@@ -296,7 +320,9 @@ void getHttp async {
 String loadAppVersion() => "1.0.2"
 
 ```
+
 使用 async 关键字，则该方法返回一个 Future，并且 认为该函数是一个耗时的操作。
+
 ``` dart
 Futre<String> loadAppVersion() async  => "1.0.2"
 ```
@@ -332,7 +358,9 @@ getHttp() {
 }
 
 ```
+
 不好的写法
+
 ``` dart
 void main() {
  doAsync();
@@ -375,6 +403,7 @@ dart 使用经典的try-catch处理异常，使用关键字throw抛出一个异�
   }
 
 ```
+
 当b变量的值为0的时候，抛出一个内置的异常IntegerDivisionByZeroException。
 
 如何定义异常日志呢？
@@ -396,7 +425,9 @@ dart 使用经典的try-catch处理异常，使用关键字throw抛出一个异�
 ```
 
 ### 捕获异常
+
 某种类型的异常可以通过on关键字捕获，如下：
+
 ``` dart
   void test1(){
     try {
@@ -414,9 +445,11 @@ dart 使用经典的try-catch处理异常，使用关键字throw抛出一个异�
   }
 
 ```
+
 注意问题，捕获的异常层级要大于抛出的异常，否则捕获会失败
 
-还是会抛出异常'逗比，不能为0的'，因为Exception比IntegerDivisionByZeroException层级要高
+还是会抛出异常'逗比，不能为0的'，因为Exception比
+IntegerDivisionByZeroException层级要高
 
 ``` dart
   void test1(){
@@ -435,7 +468,9 @@ dart 使用经典的try-catch处理异常，使用关键字throw抛出一个异�
   }
 
 ```
+
 如果你不知道抛出异常的类型，或者不确定，可以使用catch块处理任意类型的异常。
+
 ``` dart
   void test1(){
     try {
@@ -457,7 +492,9 @@ dart 使用经典的try-catch处理异常，使用关键字throw抛出一个异�
 ```
 
 ### Finally讲解
+
 dart也提供了finally块，即是否发生异常这个块都会执行。
+
 ``` dart
   void test1(){
     try {
@@ -483,7 +520,9 @@ dart也提供了finally块，即是否发生异常这个块都会执行。
 ## Dart枚举
 
 ### 枚举使用
+
 dart 支持枚举，用法和java一样。
+
 ``` dart
 Dog d = new Dog('哈巴狗', 12, CurrentState.sleeping);
 print(d.state == CurrentState.sleeping); //Prints 'true'
@@ -511,14 +550,17 @@ class Dog {
 ```
 
 ### 元数据
-使用元数据给代码添加额外信息，元数据注解是以@字符开头，后面是一个编译时常量或者调用一个常量构造函数。
-有三个注解所有的Dart代码都可使用：@deprecated、@override，@proxy,
 
+使用元数据给代码添加额外信息，元数据注解是以@字符开头，后面是一个编译时常量或者调用一个常量构造函数。
+
+有三个注解所有的Dart代码都可使用：@deprecated、@override，@proxy,
 
 元数据可以在library、typedef、type parameter、constructor、factory、function、field、parameter、或者variable声明之前使用，也可以在import或者export指令之前使用，使用反射可以再运行时获取元数据信息。
 
 ###  自定义注解
+
 定义自己的元数据注解。下面的示例定义一个带有两个参数的@toDo注解：
+
 ``` dart
 void test1() {
   doSomething();
@@ -537,10 +579,13 @@ class toDo {
 }
 
 ```
+
 ## Dart 字符串
 
 ### String简单介绍
+
 Dart字符串是UTF-16编码的字符序列，可以使用单引号或者双引号来创建字符串：
+
 ``` dart
 String str1 = '单引号字符串';
 String str2 = "双引号字符串";
@@ -566,8 +611,11 @@ print("yc-str3--" + str3);
 print("yc-str4--" + str4);
 
 ```
+
 注意点:：
+
 单引号嵌套单引号之间不允许出现空串（不是空格），双引号嵌套双引号之间不允许出现空串：
+ 
 ``` dart
 //String str5 = '单引号''''单引号';  //报错了，逗比
 String str6 = '单引号'' ''单引号';
