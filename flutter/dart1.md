@@ -52,7 +52,9 @@ var title = "标题";
 var mIsLogin = false;
 
 ```
->List 就是数组
+
+List 就是数组
+
 ```  dart
   List arr1 = [1,2,3,4];
   var arr2 = [1,2,3,4];
@@ -73,9 +75,10 @@ var mIsLogin = false;
   //Remove at a particular position 删除指定位置的值 第一个元素索引是0，最后一个元素是length-1
 
   list.removeAt(0);
-
 ```
->Map
+
+Map
+
 ```  dart
     var map = {
       'key1': 'value1',
@@ -180,16 +183,19 @@ if (number > 100) {
 int age = 60;
 String status = age < 50 ? "年轻人" : "老年人";
 ```
+
 * for循环
+
 ``` dart
   void test() {
     for (int i = 0; i < 10; i++) {
       print('$i');
     }
   }
-
 ```
+
 * while循环
+
 ``` dart
   void test() {
     int i = 0;
@@ -207,8 +213,11 @@ void test() {
     } while (i < 10);
   }
 ```
+
 * break和continue
+
 * switch和case
+
 ``` dart
 void test() {
     int age = 50;
@@ -229,6 +238,7 @@ void test() {
     }
   }
 ```
+
 * assert断言
 
 ## Dart语言中的异步
@@ -263,6 +273,7 @@ void test() {
 
 * 定义了一个叫getTest的函数，返回值为Future.你可以通过new关键字创建一个Future。Future的构造函数，需要一个函数作为参数，这个函数返回T类型的数据。在匿名函数中的返回值就是Future的返回值。
 * 当调用了getTest方法，他返回Future.我们通过调用then方法订阅Future，在then中注册回调函数，当Future返回值时调用注册函数。同时注册了catchError方法处理在Future执行之间发生的异常。这个例子中不会发生异常。
+
 ``` dart
   void test() {
     getTest().then((value) {
@@ -282,7 +293,10 @@ void test() {
   2019-06-21 17:11:12.941 16501-16583/com.hwmc.auth I/flutter: 测试----------This is a doubi
 
 ```
+
 * 下面这个案例会发生异常
+
+
 ``` dart
   void test() {
     getTest().then((value) {
@@ -305,6 +319,7 @@ void test() {
 ### 耗时异步案例
 * 在生产环境中都是一些耗时的操作，例如，网络调用，我们可以使用Future.delayed()模仿。
 * 现在如果你运行，你将需要2秒，才能返回结果。
+
 ``` dart
   void test() {
     getTest().then((value) {
@@ -321,7 +336,10 @@ void test() {
   }
 
 ```
+
+
 * 接下来再看一个案例。在调用函数之后，我们添加了print语句。在这种场景中，print语句会先执行，之后future的返回值才会打印。这是future的预期行为.但是如果我们希望在执行其他语句之前，先执行future。
+
 
 ``` dart 
   void test() {
