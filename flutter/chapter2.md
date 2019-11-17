@@ -10,8 +10,7 @@
  >Flutter is Google’s UI toolkit for building beautiful, natively compiled applications for mobile, web, and desktop from a single codebase.
 
 Flutter是由原 Google Chrome 团队成员，利用 Chrome 2D 渲染引擎，然后精简 CSS 布局演变而来。架构图如下图
-
-
+![1.jpg](https://i.loli.net/2019/11/17/AnBwTMHOFsdvREx.png)
 * Flutter 在各个原生的平台中，使用自己的 C++的引擎渲染界面，没有使用 webview，也不像 RN、NativeScript 一样使用系统的组件。简单来说平台只是给 Flutter 提供一个画布。
 * 界面使用 Dart 语言开发，貌似唯一支持 JIT（Just-In-Time），和 AOT （Ahead-Of-Time）模式的强类型语言。
 * 写法非常的现代，声明式，组件化，Composition > inheritance，响应式……就是现在前端流行的这一套 :smile:
@@ -39,12 +38,11 @@ Flutter是由原 Google Chrome 团队成员，利用 Chrome 2D 渲染引擎，�
 Dart 是由 Google 开发，最初是想作为 JavaScript 替代语言，但是失败沉寂之后，作为 Flutter 独有开发语言又焕发了第二春。
 
 实际上即使到了 2.0，Dart 语法和 JavaScriptFlutter非常的相像。单线程，Event Loop……
-
+![2.jpg](https://i.loli.net/2019/11/17/3KtvxBMbcFuaYsU.png)
 Dart 相比于Flutter  有一些更甜的语法糖
 * 不会飘的 this
 * 强类型，当然前端现在有了 TypeScript 
 * 强大方便的操作符号：
-
 
 * <kbd>?.</kbd> 方便安全的 <kbd>foo?.bar</kbd>取值，如果 foo 为 null，那么取值为 null
 * <kbd>??</kbd> <kbd>condition?expr1:expr2</kbd> 可以简写为 <kbd>expr1??expr2</kbd>
@@ -52,14 +50,17 @@ Dart 相比于Flutter  有一些更甜的语法糖
 * 级联操作符(Cascade notation ..)
 
 比如
-```
+
+``` dart
 querySelect('#button')
  ..text ="Confirm"
  ..classes.add('important')
  ..onClick.listen((e) => window.alert('Confirmed'))
 ```
+
 甚至可以重写操作符
-```
+
+```dart
 class Vector {
   final int x, y;
 
@@ -82,8 +83,10 @@ void main() {
 
 
 ```
+
 注：重写 ==，也需要重写 Object hashCodegetter
-```
+
+``` dart
 class Person {
   final String firstName, lastName;
 
@@ -118,8 +121,6 @@ void main() {
   assert(p1 == p2);
   assert(p1 != p3);
 }
-
-
 ```
 这点在 diff 对象的时候尤其有用。
 
@@ -127,7 +128,7 @@ void main() {
 
 Dart 运行在独立隔离的 iSolate 中就类似 JavaScript 一样，单线程事件驱动，但是 Dart 也开放了创建其他 isolate，充分利用 CPU 的多和能力。
 
-```
+``` dart
 loadData() async {
    // 通过spawn新建一个isolate，并绑定静态方法
    ReceivePort receivePort =ReceivePort();
@@ -178,7 +179,7 @@ Future sendReceive(SendPort sendPort, String url) {
 
 **函数类的命名参数**
 
-```
+``` dart
 void test({@required int age,String name}) {
   print(name);
   print(age);
@@ -198,9 +199,10 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
+
 大杀器：Collection If 和 Collection For
 
-```
+``` dart
 // collection If
 Widget build(BuildContext context) {
   return Row(
@@ -212,10 +214,9 @@ Widget build(BuildContext context) {
     ],
   );
 }
-
-
 ```
-```
+
+``` dart
 // Collect For
 var command = [
   engineDartPath,
@@ -231,9 +232,10 @@ var command = [
 ## Flutter 怎么写
 
 到这里终于到正题了，熟悉 React 的话，你会发现异常的熟悉。<kbd> UI=F(state)</kbd>
-
+![3.jpg](https://i.loli.net/2019/11/17/g9ke3ARsl2oj7rp.png)
 Flutter App 的一切从 <kbd>lib/main.dart</kbd>文件的 main 函数开始：
-```
+
+``` dart
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -256,6 +258,7 @@ class MyApp extends StatelessWidget {
 }
 
 ```
+
 Dart 类 build 方法返回的便是 Widget，在 Flutter 中一切都是 Widget，包括但不限于
 * 结构性元素，menu，button 等
 * 样式类元素，font，color 等
@@ -264,6 +267,7 @@ Dart 类 build 方法返回的便是 Widget，在 Flutter 中一切都是 Widget
 * 手势
 
 Widget 是 Dart 中特殊的类，通过实例化(Dart 中new 是可选的)相互嵌套，你的这个 App 就是形如下图的一颗组件树(Dart 入口函数的概念， main.dart->main())。
+![4.jpg](https://i.loli.net/2019/11/17/VO4inQazkTNhlEu.png)
 
 ### Widget 布局
 
@@ -296,7 +300,7 @@ Flutter 中 Widget 可以分为三类，形如 React 中“展示组件”、“
 
 状态组件就是类似于 React 中的“容器组件”了，Flutter 中状态组件写法会稍微不一样。
 
-```
+``` dart
 class Counter extends StatefulWidget {
   // This class is the configuration for the state. It holds the
   // values (in this case nothing) provided by the parent and used by the build
@@ -345,9 +349,16 @@ class _CounterState extends State<Counter> {
 
 可以看到 Flutter 中直接使用了和 React 中同名的 setState方法，不过不会有变量合并的东西，当然也有[生命周期](https://segmentfault.com/a/1190000015211309)。
 
-一个有状态的组件需要两个 Class，这样写的原因在于，Flutter 中 Widget 都是 immmutable 的，状态组件的状态保存在 State 中，组件仍然每次重新创建，Widget 在这里只是一种对组件的描述，Flutter 会 diff 转换成 Element，然后转换成 RenderObject 才渲染。
+![5.jpg](https://i.loli.net/2019/11/17/bYhFOATfLr7eJ4N.png)
+
+可以看到一个有状态的组件需要两个 Class，这样写的原因在于，Flutter 中 Widget 都是 immmutable 的，状态组件的状态保存在 State 中，组件仍然每次重新创建，Widget 在这里只是一种对组件的描述，Flutter 会 diff 转换成 Element，然后转换成 RenderObject 才渲染。
+
+![6.jpg](https://i.loli.net/2019/11/17/s7QS5zZN92LrPfV.jpg)
 
 Flutter Widget 更多的渲染流程可以看[这里](https://www.yuque.com/xytech/flutter/tge705)。
+
+实际上 Widget 只是作为组件结构一种描述，还可以带来的好处是，你可以更方便的做一些主题性的组件, Flutter 官方提供的Material Components widgets和Cupertino (iOS-style) widgets质量就相当高，再配合 Flutter 亚秒级的Hot Reload，开发体验可以说挺不错的。
+
 
 ## State Management
 
@@ -357,7 +368,7 @@ setState()可以很方便的管理组件内的数据，但是 Flutter 中状态�
 
 同样 Flutter 也有个 context一样的东西，那就是 InheritedWidget，使用起来也很简单。
 
-```
+``` dart
 class GlobalData extends InheritedWidget {
   final int count;
   GlobalData({Key key, this.count,Widget child}):super(key:key,child:child);
@@ -452,6 +463,7 @@ class Body2 extends StatelessWidget {
   }
 
 ```
+
 具体实现原理可以参考[这里](https://loveky.github.io/2018/07/18/how-flutter-inheritedwidget-works/)，不过 Google 封装了一个更为上层的库[provider](https://pub.dev/packages/provider)，具体使用可以看[这里](https://flutter.dev/docs/development/data-and-backend/state-mgmt/simple)。
 
 ### BlOC
@@ -461,7 +473,8 @@ class Body2 extends StatelessWidget {
 #### Bloc = InheritedWidget + RxDart(Stream)
 
 Dart 语言中内置了 Steam，Stream ~= Observable，配合[RxDart](https://pub.dev/packages/rxdart), 然后加上 StreamBuilder会是一种异常强大和自由的模式。
-```
+
+``` dart
 class GlobalData extends InheritedWidget {
   final int count;
   final Stream<String> timeInterval$ = new Stream.periodic(Duration(seconds: 10)).map((time) => new DateTime.now().toString());
@@ -491,6 +504,7 @@ class TimerView extends StatelessWidget {
 }
 
 ```
+
 当然 Bloc 的问题在于
 * 学习成本略高，Rx 的概念要吃透，不然你会抓狂
 * 自由带来的问题是，可能代码不如 Redux 类的规整。
@@ -514,7 +528,7 @@ class TimerView extends StatelessWidget {
 
 Flutter debugger，测试都是出场自带，用起来也不难。
 
-```
+``` dart
 // 测试在/test/目录下面
 void main() {
 
@@ -542,7 +556,7 @@ void main() {
 
 类似与 JavaScript 的 npm，Flutter，也就是 Dart 也有自己的包仓库。不过项目包的依赖使用 yaml 文件来描述:
 
-```
+``` dart
 name: app
 description: A new Flutter project.
 version: 1.0.0+1
@@ -561,7 +575,8 @@ dependencies:
 ## 生命周期
 
 移动应用总归需要应用级别的生命周期，flutter 中使用生命周期钩子，也非常的简单：
-```
+
+``` dart
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => new _MyAppState();
@@ -605,7 +620,18 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 }
 ```
+## 使用原生能力
 
+和 ReactNative 类似，Flutter 也是使用类似事件的机制来使用平台相关能力
 
+![7.jpg](https://i.loli.net/2019/11/17/dxeyFgozOifRMHP.png)
+
+## Flutter Web, Flutter Desktop
+
+这些还在开发当中，鉴于对 Dart 喜欢，以及对 Flutter 性能的乐观，这些倒是很值得期待。
+
+还记得平台只是给 Flutter 提供一个画布么，Flutter Desktop 未来更是可以大有可为的，相关可以看[这里](https://github.com/flutter/flutter/wiki/Desktop-shells)
+
+最后每种方案，每种技术都有优缺点，甚至技术的架构决定了，有些缺陷可能永远都没法改进，现在的Flutter圈子 和社区比RN来说 还是比较小的，所以。。。
 
 
