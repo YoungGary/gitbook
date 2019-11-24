@@ -1,6 +1,8 @@
 
 # Flutter 技术总结分享
 
+![11525642-20add9a2fdd2861d.jpg](https://i.loli.net/2019/11/24/A5aYkLwgRrEZlMV.jpg)
+
 ## 前言
 
  结合[官方文档](https://flutterchina.club/get-started/install/)和《Fluuter技术与入门实践》书籍 详细阐述Flutter技术，涉及Dart语言，Flutter Widget，Flutter状态管理等。
@@ -84,7 +86,6 @@ DWebView dwebView = (DWebView) findViewById(R.id.dwebview);
 dwebView.addJavascriptObject(new JsAPI(), null);
 ```
 * 在JavaScript中调用原生API
-
 ``` javascript
 var dsBridge = require("dsbridge")
 //直接调用原生API `getPhoneModel`
@@ -398,7 +399,7 @@ Future sendReceive(SendPort sendPort, String url) {
 
 当然 Flutter 中封装了[compute](https://api.flutter.dev/flutter/foundation/compute.html)，可以方便的使用，譬如[在其它 isolate 中解析大的 json](https://flutter.dev/docs/cookbook/networking/background-parsing)。 -->
 
-### Dart UI as Code
+## Dart UI as Code
 
 在这里单独提出来的意义在于，从 React 开始，到 Flutter，到最近的 Apple SwiftUI，Android Jetpack Compose 声明式组件写法越发流行，Web 前端使用 JSX 来让开发者更方便的书写，而 Flutter，SwiftUI 则直接从优化语言本身着手。
 
@@ -784,17 +785,21 @@ request.add(utf8.encode(payload));
 //request.addStream(_inputStream); //可以直接添加输入流
 ```
 * 等待连接服务器：
+
 ``` dart
 HttpClientResponse response = await request.close();
 ```
 这一步完成后，请求信息就已经发送给服务器了，返回一个HttpClientResponse对象，它包含响应头（header）和响应流(响应体的Stream)，接下来就可以通过读取响应流来获取响应内容。
+
 * 读取响应内容：
+
 ``` dart
 String responseBody = await response.transform(utf8.decoder).join();
 ```
 我们通过读取响应流来获取服务器返回的数据，在读取时我们可以设置编码格式，这里是utf8。
 
 * 请求结束，关闭HttpClient：
+
 ``` dart
 httpClient.close();
 ```
