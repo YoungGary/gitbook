@@ -1,0 +1,854 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>3.Flutter初始化 · Gary的小窝</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="Gary">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism-solarizedlight.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-theme-comscore/test.css">
+                
+            
+        
+
+    
+
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="containerText.html" />
+    
+    
+    <link rel="prev" href="dart2.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    写在前面
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../leetcode/">
+            
+                <a href="../leetcode/">
+            
+                    
+                    Leetcode之旅
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../leetcode/1.html">
+            
+                <a href="../leetcode/1.html">
+            
+                    
+                    1.两数之和
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../leetcode/2.html">
+            
+                <a href="../leetcode/2.html">
+            
+                    
+                    2.两数相加
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../leetcode/3.html">
+            
+                <a href="../leetcode/3.html">
+            
+                    
+                    3.无重复字符的最长子串
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../leetcode/4.html">
+            
+                <a href="../leetcode/4.html">
+            
+                    
+                    4.寻找两个有序数组的中位数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../leetcode/6.html">
+            
+                <a href="../leetcode/6.html">
+            
+                    
+                    6.Z字形变换
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../leetcode/9.html">
+            
+                <a href="../leetcode/9.html">
+            
+                    
+                    9.回文数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../leetcode/11.html">
+            
+                <a href="../leetcode/11.html">
+            
+                    
+                    11.盛最多水的容器
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../leetcode/12.html">
+            
+                <a href="../leetcode/12.html">
+            
+                    
+                    12.整数转罗马数字
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../leetcode/13.html">
+            
+                <a href="../leetcode/13.html">
+            
+                    
+                    13.罗马数字转整数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.10" data-path="../leetcode/14.html">
+            
+                <a href="../leetcode/14.html">
+            
+                    
+                    14.最长公共前缀
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    Flutter从入门到放弃
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="dart1.html">
+            
+                <a href="dart1.html">
+            
+                    
+                    1.Dart语言(1)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="dart2.html">
+            
+                <a href="dart2.html">
+            
+                    
+                    2.Dart语言(2)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.3" data-path="widget1.html">
+            
+                <a href="widget1.html">
+            
+                    
+                    3.Flutter初始化
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="containerText.html">
+            
+                <a href="containerText.html">
+            
+                    
+                    4.Container和Text组件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="image.html">
+            
+                <a href="image.html">
+            
+                    
+                    5.Image组件
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="chapter2.html">
+            
+                <a href="chapter2.html">
+            
+                    
+                    6.Flutter 技术总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../ts/">
+            
+                <a href="../ts/">
+            
+                    
+                    TypeScript系列
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../ts/1.html">
+            
+                <a href="../ts/1.html">
+            
+                    
+                    1.安装与上手
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../ts/2.html">
+            
+                <a href="../ts/2.html">
+            
+                    
+                    2.基础类型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../ts/3.html">
+            
+                <a href="../ts/3.html">
+            
+                    
+                    3.接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../ts/4.html">
+            
+                <a href="../ts/4.html">
+            
+                    
+                    4.类
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../js/">
+            
+                <a href="../js/">
+            
+                    
+                    JavaScript进阶
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../js/proxy.html">
+            
+                <a href="../js/proxy.html">
+            
+                    
+                    1.Vue.js 3.0中的响应式
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../js/el.html">
+            
+                <a href="../js/el.html">
+            
+                    
+                    2.Element UI 源码初探
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../js/bind.html">
+            
+                <a href="../js/bind.html">
+            
+                    
+                    3.bind的模拟实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../js/proto.html">
+            
+                <a href="../js/proto.html">
+            
+                    
+                    4.JS原型和原型链
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../js/ui.html">
+            
+                <a href="../js/ui.html">
+            
+                    
+                    5.Vue cli3 库模式搭建组件库并发布到 npm
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../life/">
+            
+                <a href="../life/">
+            
+                    
+                    网事杂谈
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../life/1.html">
+            
+                <a href="../life/1.html">
+            
+                    
+                    1.周杰伦专辑赏析--叶惠美
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6.2" data-path="../life/2.html">
+            
+                <a href="../life/2.html">
+            
+                    
+                    2.周杰伦专辑赏析--七里香
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            本书使用 GitBook 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >3.Flutter初始化</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#flutter-&#x8D77;&#x6B65;"><b></b>Flutter &#x8D77;&#x6B65;</a></li><ul><li><span class="title-icon "></span><a href="#flutter-&#x73AF;&#x5883;&#x642D;&#x5EFA;"><b></b>Flutter &#x73AF;&#x5883;&#x642D;&#x5EFA;</a></li><li><span class="title-icon "></span><a href="#flutter-&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x4ECB;&#x7ECD;"><b></b>Flutter &#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x4ECB;&#x7ECD;</a></li><li><span class="title-icon "></span><a href="#flutter-&#x5165;&#x53E3;&#x6587;&#x4EF6;&#x3001;-&#x5165;&#x53E3;&#x65B9;&#x6CD5;"><b></b>Flutter &#x5165;&#x53E3;&#x6587;&#x4EF6;&#x3001; &#x5165;&#x53E3;&#x65B9;&#x6CD5;</a></li><li><span class="title-icon "></span><a href="#flutter-&#x7B2C;&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6;"><b></b>Flutter &#x7B2C;&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6;</a></li><li><span class="title-icon "></span><a href="#&#x7ED9;text-&#x7EC4;&#x4EF6;&#x589E;&#x52A0;&#x4E00;&#x4E9B;&#x88C5;&#x9970;&#x5C5E;&#x6027;"><b></b>&#x7ED9;Text &#x7EC4;&#x4EF6;&#x589E;&#x52A0;&#x4E00;&#x4E9B;&#x88C5;&#x9970;&#x5C5E;&#x6027;</a></li><li><span class="title-icon "></span><a href="#&#x4F7F;&#x7528;-materialapp-&#x548C;-scaffold&#x4E24;&#x4E2A;&#x7EC4;&#x4EF6;&#x88C5;&#x9970;-app"><b></b>&#x4F7F;&#x7528; MaterialApp &#x548C; Scaffold&#x4E24;&#x4E2A;&#x7EC4;&#x4EF6;&#x88C5;&#x9970; App</a></li><ul><li><span class="title-icon "></span><a href="#materialapp"><b></b>MaterialApp</a></li><li><span class="title-icon "></span><a href="#scaffold"><b></b>Scaffold</a></li></ul><li><span class="title-icon "></span><a href="#vscode-&#x8C03;&#x8BD5;-flutter-&#x9879;&#x76EE;"><b></b>Vscode &#x8C03;&#x8BD5; Flutter &#x9879;&#x76EE;</a></li></ul></ul></div><a href="#flutter-&#x8D77;&#x6B65;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="flutter-&#x8D77;&#x6B65;"><a name="flutter-&#x8D77;&#x6B65;" class="anchor-navigation-ex-anchor" href="#flutter-&#x8D77;&#x6B65;"><i class="fa fa-link" aria-hidden="true"></i></a>Flutter &#x8D77;&#x6B65;</h1>
+<h2 id="flutter-&#x73AF;&#x5883;&#x642D;&#x5EFA;"><a name="flutter-&#x73AF;&#x5883;&#x642D;&#x5EFA;" class="anchor-navigation-ex-anchor" href="#flutter-&#x73AF;&#x5883;&#x642D;&#x5EFA;"><i class="fa fa-link" aria-hidden="true"></i></a>Flutter &#x73AF;&#x5883;&#x642D;&#x5EFA;</h2>
+<p>&#x8FD9;&#x4E00;&#x90E8;&#x5206;&#x53EF;&#x4EE5;&#x67E5;&#x770B;<a href="https://flutterchina.club/get-started/install/" target="_blank">&#x5B98;&#x65B9;&#x6587;&#x6863;</a></p>
+<h2 id="flutter-&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x4ECB;&#x7ECD;"><a name="flutter-&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x4ECB;&#x7ECD;" class="anchor-navigation-ex-anchor" href="#flutter-&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x4ECB;&#x7ECD;"><i class="fa fa-link" aria-hidden="true"></i></a>Flutter &#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x4ECB;&#x7ECD;</h2>
+<p>&#x5F53;&#x4F60;&#x642D;&#x5EFA;&#x597D;&#x73AF;&#x5883;&#x540E; &#x53EF;&#x4EE5;&#x5728;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#x7684;&#x547D;&#x4EE4;&#x884C;&#x4E2D;&#x8F93;&#x5165;</p>
+<pre class="language-"><code>flutter create +&#x9879;&#x76EE;&#x540D;
+</code></pre><p>&#x521B;&#x5EFA;&#x4E00;&#x4E2A;flutter &#x9879;&#x76EE;&#xFF0C;&#x5F53;&#x521B;&#x5EFA;&#x6210;&#x529F;&#x540E;&#x4F7F;&#x7528;vscode&#x6253;&#x5F00;&#x5F53;&#x524D;&#x7684;&#x6587;&#x4EF6;&#x5939;&#xFF0C;&#x5927;&#x6982;&#x662F;&#x5982;&#x4E0B;&#x7684;&#x7ED3;&#x6784;&#x3002;
+<img src="https://i.loli.net/2019/11/23/GQhnskFaScD9fgC.png" alt="1.png"></p>
+<p>&#x6211;&#x4EEC;&#x7740;&#x91CD;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x4E00;&#x4E0B;&#x51E0;&#x4E2A;&#x6587;&#x4EF6;&#x5939;</p>
+<table>
+<thead>
+<tr>
+<th>&#x6587;&#x4EF6;&#x5939;</th>
+<th>&#x4F5C;&#x7528;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>android</td>
+<td>android &#x5E73;&#x53F0;&#x76F8;&#x5173;&#x4EE3;&#x7801;</td>
+</tr>
+<tr>
+<td>ios</td>
+<td>flutter &#x76F8;&#x5173;&#x4EE3;&#x7801;&#xFF0C; &#x6211;&#x4EEC;&#x4E3B;&#x8981;&#x7F16;&#x5199;&#x7684;&#x4EE3;&#x7801;&#x5C31;&#x5728;&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x5939;</td>
+</tr>
+<tr>
+<td>lib</td>
+<td>ios &#x5E73;&#x53F0;&#x76F8;&#x5173;&#x4EE3;&#x7801;</td>
+</tr>
+<tr>
+<td>test</td>
+<td>&#x7528;&#x4E8E;&#x5B58;&#x653E;&#x6D4B;&#x8BD5;&#x4EE3;&#x7801;</td>
+</tr>
+<tr>
+<td>pubspec.yaml</td>
+<td>&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF0C; &#x4E00;&#x822C;&#x5B58;&#x653E;&#x4E00;&#x4E9B;&#x7B2C;&#x4E09;&#x65B9;&#x5E93;&#x7684;&#x4F9D;&#x8D56;&#x3002;</td>
+</tr>
+</tbody>
+</table>
+<h2 id="flutter-&#x5165;&#x53E3;&#x6587;&#x4EF6;&#x3001;-&#x5165;&#x53E3;&#x65B9;&#x6CD5;"><a name="flutter-&#x5165;&#x53E3;&#x6587;&#x4EF6;&#x3001;-&#x5165;&#x53E3;&#x65B9;&#x6CD5;" class="anchor-navigation-ex-anchor" href="#flutter-&#x5165;&#x53E3;&#x6587;&#x4EF6;&#x3001;-&#x5165;&#x53E3;&#x65B9;&#x6CD5;"><i class="fa fa-link" aria-hidden="true"></i></a>Flutter &#x5165;&#x53E3;&#x6587;&#x4EF6;&#x3001; &#x5165;&#x53E3;&#x65B9;&#x6CD5;</h2>
+<p>&#x6BCF;&#x4E00;&#x4E2A; flutter &#x9879;&#x76EE;&#x7684; lib &#x76EE;&#x5F55;&#x91CC;&#x9762;&#x90FD;&#x6709;&#x4E00;&#x4E2A; main.dart &#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#x5C31;&#x662F; flutter &#x7684;&#x5165;&#x53E3;&#x6587;&#x4EF6;</p>
+<p>&#x5728;main.dart&#x4E2D;</p>
+<pre class="language-"><code class="lang-dart"><span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+<span class="token function">runApp</span><span class="token punctuation">(</span><span class="token function">MyApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//&#x4E5F;&#x53EF;&#x4EE5;&#x7B80;&#x5199;</span>
+<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=</span><span class="token operator">&gt;</span><span class="token function">runApp</span><span class="token punctuation">(</span><span class="token function">MyApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>&#x5176;&#x4E2D;&#x7684; main &#x65B9;&#x6CD5;&#x662F; dart &#x7684;&#x5165;&#x53E3;&#x65B9;&#x6CD5;&#x3002; runApp &#x65B9;&#x6CD5;&#x662F; flutter &#x7684;&#x5165;&#x53E3;&#x65B9;&#x6CD5;&#x3002;
+MyApp &#x662F;&#x81EA;&#x5B9A;&#x4E49;&#x7684;&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6;</p>
+<h2 id="flutter-&#x7B2C;&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6;"><a name="flutter-&#x7B2C;&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6;" class="anchor-navigation-ex-anchor" href="#flutter-&#x7B2C;&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6;"><i class="fa fa-link" aria-hidden="true"></i></a>Flutter &#x7B2C;&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6;</h2>
+<p>&#x4E0A;&#x6587;&#x63D0;&#x5230;&#x5728;runApp&#x65B9;&#x6CD5;&#x4E2D; MyApp&#x662F;&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6; &#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x5C31;&#x5F00;&#x59CB;&#x5B9A;&#x4E49;&#x8FD9;&#x4E2A;&#x7EC4;&#x4EF6;</p>
+<p>&#x5728; Flutter &#x4E2D;&#x81EA;&#x5B9A;&#x4E49;&#x7EC4;&#x4EF6;&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x7C7B;&#xFF0C; &#x8FD9;&#x4E2A;&#x7C7B;&#x9700;&#x8981;&#x7EE7;&#x627F; StatelessWidget/StatefulWidget</p>
+<p>StatelessWidget &#x662F;&#x65E0;&#x72B6;&#x6001;&#x7EC4;&#x4EF6;&#xFF0C; &#x72B6;&#x6001;&#x4E0D;&#x53EF;&#x53D8;&#x7684; widget
+StatefulWidget &#x662F;&#x6709;&#x72B6;&#x6001;&#x7EC4;&#x4EF6;&#xFF0C; &#x6301;&#x6709;&#x7684;&#x72B6;&#x6001;&#x53EF;&#x80FD;&#x5728; widget &#x751F;&#x547D;&#x5468;&#x671F;&#x6539;&#x53D8;</p>
+<pre class="language-"><code class="lang-dart">mport <span class="token string">&apos;package:flutter/material.dart&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">runApp</span><span class="token punctuation">(</span><span class="token function">MyApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> 
+<span class="token keyword">class</span> <span class="token class-name">MyApp</span> <span class="token keyword">extends</span> <span class="token class-name">StatelessWidget</span><span class="token punctuation">{</span>
+<span class="token metadata symbol">@override</span>
+Widget <span class="token function">build</span><span class="token punctuation">(</span>BuildContext context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// TODO: implement build</span>
+    <span class="token keyword">return</span> <span class="token function">Center</span><span class="token punctuation">(</span>
+        child<span class="token punctuation">:</span> <span class="token function">Text</span><span class="token punctuation">(</span>
+            <span class="token string">&quot;&#x6211;&#x662F;&#x4E00;&#x4E2A;&#x6587;&#x672C;&#x5185;&#x5BB9;&quot;</span><span class="token punctuation">,</span>
+                textDirection<span class="token punctuation">:</span>TextDirection<span class="token punctuation">.</span>ltr<span class="token punctuation">,</span>
+            <span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>&#x5728;MyApp &#x8FD9;&#x4E2A;&#x7C7B;&#x4E2D;&#x4F1A;&#x91CD;&#x5199;build &#x65B9;&#x6CD5;&#x8FD4;&#x56DE;&#x8FD9;&#x4E2A;&#x7EC4;&#x4EF6;&#x3002; &#x5728;Flutter &#x4E2D; Center &#x7EC4;&#x4EF6;&#x8868;&#x793A;&#x8FD9;&#x4E2A;&#x7EC4;&#x4EF6;&#x662F;&#x5C45;&#x4E2D;&#x663E;&#x793A;&#x7684; &#x5728;child&#x4E2D;&#x5305;&#x88F9;&#x4E00;&#x4E2A;text&#x7EC4;&#x4EF6; &#x5E76;&#x663E;&#x793A;&#x6587;&#x5B57;&#x3002; Text &#x4E5F;&#x6709;textDirection&#x5C5E;&#x6027;&#xFF0C;&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;&#x6587;&#x5B57;&#x7684;&#x5BF9;&#x9F50;&#x65B9;&#x5F0F;&#x3002; &#x8FD9;&#x5C31;&#x662F;&#x58F0;&#x660E;&#x5F0F;UI &#x7684;&#x5199;&#x6CD5;&#x3002;&#x5173;&#x4E8E;Center&#xFF0C;Text&#x7EC4;&#x4EF6;&#x7684;&#x7528;&#x6CD5; &#x4F1A;&#x5728;&#x540E;&#x9762;&#x8BE6;&#x7EC6;&#x8BB2;&#x3002;</p>
+<h2 id="&#x7ED9;text-&#x7EC4;&#x4EF6;&#x589E;&#x52A0;&#x4E00;&#x4E9B;&#x88C5;&#x9970;&#x5C5E;&#x6027;"><a name="&#x7ED9;text-&#x7EC4;&#x4EF6;&#x589E;&#x52A0;&#x4E00;&#x4E9B;&#x88C5;&#x9970;&#x5C5E;&#x6027;" class="anchor-navigation-ex-anchor" href="#&#x7ED9;text-&#x7EC4;&#x4EF6;&#x589E;&#x52A0;&#x4E00;&#x4E9B;&#x88C5;&#x9970;&#x5C5E;&#x6027;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x7ED9;Text &#x7EC4;&#x4EF6;&#x589E;&#x52A0;&#x4E00;&#x4E9B;&#x88C5;&#x9970;&#x5C5E;&#x6027;</h2>
+<pre class="language-"><code class="lang-dart"><span class="token keyword">import</span> <span class="token string">&apos;package:flutter/material.dart&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <span class="token function">runApp</span><span class="token punctuation">(</span><span class="token function">MyApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> 
+<span class="token keyword">class</span> <span class="token class-name">MyApp</span> <span class="token keyword">extends</span> <span class="token class-name">StatelessWidget</span><span class="token punctuation">{</span>
+  <span class="token metadata symbol">@override</span>
+  Widget <span class="token function">build</span><span class="token punctuation">(</span>BuildContext context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// TODO: implement build</span>
+    <span class="token keyword">return</span> <span class="token function">Center</span><span class="token punctuation">(</span>
+        child<span class="token punctuation">:</span> <span class="token function">Text</span><span class="token punctuation">(</span>
+            <span class="token string">&quot;&#x6211;&#x662F; Dart &#x4E00;&#x4E2A;&#x6587;&#x672C;&#x5185;&#x5BB9;&quot;</span><span class="token punctuation">,</span>
+            textDirection<span class="token punctuation">:</span> TextDirection<span class="token punctuation">.</span>ltr<span class="token punctuation">,</span>
+            style<span class="token punctuation">:</span> <span class="token function">TextStyle</span><span class="token punctuation">(</span>
+                fontSize<span class="token punctuation">:</span> <span class="token number">40.0</span><span class="token punctuation">,</span>
+                fontWeight<span class="token punctuation">:</span> FontWeight<span class="token punctuation">.</span>bold<span class="token punctuation">,</span>
+                <span class="token comment">// color: Colors.yellow</span>
+                color<span class="token punctuation">:</span> Color<span class="token punctuation">.</span><span class="token function">fromRGBO</span><span class="token punctuation">(</span><span class="token number">255</span><span class="token punctuation">,</span> <span class="token number">222</span><span class="token punctuation">,</span> <span class="token number">222</span><span class="token punctuation">,</span> <span class="token number">0.5</span><span class="token punctuation">)</span>
+            <span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="&#x4F7F;&#x7528;-materialapp-&#x548C;-scaffold&#x4E24;&#x4E2A;&#x7EC4;&#x4EF6;&#x88C5;&#x9970;-app"><a name="&#x4F7F;&#x7528;-materialapp-&#x548C;-scaffold&#x4E24;&#x4E2A;&#x7EC4;&#x4EF6;&#x88C5;&#x9970;-app" class="anchor-navigation-ex-anchor" href="#&#x4F7F;&#x7528;-materialapp-&#x548C;-scaffold&#x4E24;&#x4E2A;&#x7EC4;&#x4EF6;&#x88C5;&#x9970;-app"><i class="fa fa-link" aria-hidden="true"></i></a>&#x4F7F;&#x7528; MaterialApp &#x548C; Scaffold&#x4E24;&#x4E2A;&#x7EC4;&#x4EF6;&#x88C5;&#x9970; App</h2>
+<h3 id="materialapp"><a name="materialapp" class="anchor-navigation-ex-anchor" href="#materialapp"><i class="fa fa-link" aria-hidden="true"></i></a>MaterialApp</h3>
+<p>MaterialApp &#x662F;&#x4E00;&#x4E2A;&#x65B9;&#x4FBF;&#x7684; Widget&#xFF0C;&#x5B83;&#x5C01;&#x88C5;&#x4E86;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x5B9E;&#x73B0; Material Design &#x6240;&#x9700;&#x8981;&#x7684;
+&#x4E00;&#x4E9B; Widget&#x3002;&#x4E00;&#x822C;&#x4F5C;&#x4E3A;&#x9876;&#x5C42; widget &#x4F7F;&#x7528;&#x3002;
+&#x5E38;&#x7528;&#x7684;&#x5C5E;&#x6027;&#xFF1A;
+home&#xFF08; &#x4E3B;&#x9875;&#xFF09;
+title&#xFF08; &#x6807;&#x9898;&#xFF09;
+color&#xFF08; &#x989C;&#x8272;&#xFF09;
+theme&#xFF08; &#x4E3B;&#x9898;&#xFF09;
+routes&#xFF08; &#x8DEF;&#x7531;&#xFF09;</p>
+<h3 id="scaffold"><a name="scaffold" class="anchor-navigation-ex-anchor" href="#scaffold"><i class="fa fa-link" aria-hidden="true"></i></a>Scaffold</h3>
+<p>Scaffold &#x662F; Material Design &#x5E03;&#x5C40;&#x7ED3;&#x6784;&#x7684;&#x57FA;&#x672C;&#x5B9E;&#x73B0;&#x3002;&#x6B64;&#x7C7B;&#x63D0;&#x4F9B;&#x4E86;&#x7528;&#x4E8E;&#x663E;&#x793A; drawer&#x3001;
+snackbar &#x548C;&#x5E95;&#x90E8; sheet &#x7684; API&#x3002;</p>
+<p>caffold &#x6709;&#x4E0B;&#x9762;&#x51E0;&#x4E2A;&#x4E3B;&#x8981;&#x5C5E;&#x6027;&#xFF1A;</p>
+<p>appBar - &#x663E;&#x793A;&#x5728;&#x754C;&#x9762;&#x9876;&#x90E8;&#x7684;&#x4E00;&#x4E2A; AppBar&#x3002;</p>
+<p>body - &#x5F53;&#x524D;&#x754C;&#x9762;&#x6240;&#x663E;&#x793A;&#x7684;&#x4E3B;&#x8981;&#x5185;&#x5BB9; Widget&#x3002;</p>
+<p>drawer - &#x62BD;&#x5C49;&#x83DC;&#x5355;&#x63A7;&#x4EF6;&#x3002;</p>
+<pre class="language-"><code class="lang-dart"><span class="token keyword">import</span> <span class="token string">&apos;package:flutter/material.dart&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">runApp</span><span class="token punctuation">(</span><span class="token function">MyApp</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> 
+<span class="token keyword">class</span> <span class="token class-name">MyApp</span> <span class="token keyword">extends</span> <span class="token class-name">StatelessWidget</span><span class="token punctuation">{</span>
+    <span class="token metadata symbol">@override</span>
+    Widget <span class="token function">build</span><span class="token punctuation">(</span>BuildContext context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// TODO: implement build</span>
+        <span class="token keyword">return</span> <span class="token function">MaterialApp</span><span class="token punctuation">(</span>
+            title<span class="token punctuation">:</span><span class="token string">&quot;&#x6211;&#x662F;&#x4E00;&#x4E2A;&#x6807;&#x9898;&quot;</span><span class="token punctuation">,</span>
+            home<span class="token punctuation">:</span><span class="token function">Scaffold</span><span class="token punctuation">(</span>
+                appBar<span class="token punctuation">:</span> <span class="token function">AppBar</span><span class="token punctuation">(</span>
+                    title<span class="token punctuation">:</span><span class="token function">Text</span><span class="token punctuation">(</span><span class="token string">&apos;data&apos;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                    elevation<span class="token punctuation">:</span> <span class="token number">30.0</span><span class="token punctuation">,</span> <span class="token comment">//&#x8BBE;&#x7F6E;&#x6807;&#x9898;&#x9634;&#x5F71; &#x4E0D;&#x9700;&#x8981;&#x7684;&#x8BDD;&#x503C;&#x8BBE;&#x7F6E;&#x6210; 0.0</span>
+                <span class="token punctuation">)</span>
+                body<span class="token punctuation">:</span> <span class="token function">MyHome</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token punctuation">)</span><span class="token punctuation">,</span>
+            theme<span class="token punctuation">:</span> <span class="token function">ThemeData</span><span class="token punctuation">(</span> <span class="token comment">//&#x8BBE;&#x7F6E;&#x4E3B;&#x9898;&#x989C;&#x8272;</span>
+                primarySwatch<span class="token punctuation">:</span> Colors<span class="token punctuation">.</span>yellow
+            <span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span> 
+
+<span class="token keyword">class</span> <span class="token class-name">MyHome</span> <span class="token keyword">extends</span> <span class="token class-name">StatelessWidget</span><span class="token punctuation">{</span>
+    <span class="token metadata symbol">@override</span>
+    Widget <span class="token function">build</span><span class="token punctuation">(</span>BuildContext context<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// TODO: implement build</span>
+        <span class="token keyword">return</span> <span class="token function">Center</span><span class="token punctuation">(</span>
+            child<span class="token punctuation">:</span> <span class="token function">Text</span><span class="token punctuation">(</span>
+                <span class="token string">&quot;&#x6211;&#x662F; Dart &#x4E00;&#x4E2A;&#x6587;&#x672C;&#x5185;&#x5BB9;&quot;</span><span class="token punctuation">,</span>
+                textDirection<span class="token punctuation">:</span> TextDirection<span class="token punctuation">.</span>ltr<span class="token punctuation">,</span>
+                style<span class="token punctuation">:</span> <span class="token function">TextStyle</span><span class="token punctuation">(</span>
+                    fontSize<span class="token punctuation">:</span> <span class="token number">40.0</span><span class="token punctuation">,</span>
+                    fontWeight<span class="token punctuation">:</span> FontWeight<span class="token punctuation">.</span>bold<span class="token punctuation">,</span>
+                    color<span class="token punctuation">:</span> Colors<span class="token punctuation">.</span>black38
+                    <span class="token comment">// color: Color.fromRGBO(255, 222, 222, 0.5)</span>
+                <span class="token punctuation">)</span><span class="token punctuation">,</span>
+            <span class="token punctuation">)</span><span class="token punctuation">,</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="vscode-&#x8C03;&#x8BD5;-flutter-&#x9879;&#x76EE;"><a name="vscode-&#x8C03;&#x8BD5;-flutter-&#x9879;&#x76EE;" class="anchor-navigation-ex-anchor" href="#vscode-&#x8C03;&#x8BD5;-flutter-&#x9879;&#x76EE;"><i class="fa fa-link" aria-hidden="true"></i></a>Vscode &#x8C03;&#x8BD5; Flutter &#x9879;&#x76EE;</h2>
+<p>Vscode &#x4E2D;&#x6253;&#x5F00; flutter &#x9879;&#x76EE;&#x8FDB;&#x884C;&#x5F00;&#x53D1;</p>
+<p>&#x8FD0;&#x884C; Flutter &#x9879;&#x76EE;</p>
+<pre class="language-"><code>flutter run
+</code></pre><p>r &#x952E;&#xFF1A; &#x70B9;&#x51FB;&#x540E;&#x70ED;&#x52A0;&#x8F7D;&#xFF0C; &#x4E5F;&#x5C31;&#x7B97;&#x662F;&#x91CD;&#x65B0;&#x52A0;&#x8F7D;&#x5427;&#x3002;</p>
+<p>p &#x952E;&#xFF1A; &#x663E;&#x793A;&#x7F51;&#x683C;&#xFF0C; &#x8FD9;&#x4E2A;&#x53EF;&#x4EE5;&#x5F88;&#x597D;&#x7684;&#x638C;&#x63E1;&#x5E03;&#x5C40;&#x60C5;&#x51B5;&#xFF0C; &#x5DE5;&#x4F5C;&#x4E2D;&#x5F88;&#x6709;&#x7528;&#x3002;</p>
+<p>o &#x952E;&#xFF1A; &#x5207;&#x6362; android &#x548C; ios &#x7684;&#x9884;&#x89C8;&#x6A21;&#x5F0F;&#x3002;</p>
+<p>q &#x952E;&#xFF1A; &#x9000;&#x51FA;&#x8C03;&#x8BD5;&#x9884;&#x89C8;&#x6A21;&#x5F0F;&#x3002; </p>
+<footer class="page-footer"><span class="copyright">Copyright &#xA9; YoungGary 2019 all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x4EF6;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
+2019-11-23 14:05:42
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="dart2.html" class="navigation navigation-prev " aria-label="Previous page: 2.Dart语言(2)">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="containerText.html" class="navigation navigation-next " aria-label="Next page: 4.Container和Text组件">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"3.Flutter初始化","level":"1.3.3","depth":2,"next":{"title":"4.Container和Text组件","level":"1.3.4","depth":2,"path":"flutter/containerText.md","ref":"flutter/containerText.md","articles":[]},"previous":{"title":"2.Dart语言(2)","level":"1.3.2","depth":2,"path":"flutter/dart2.md","ref":"flutter/dart2.md","articles":[]},"dir":"ltr"},"config":{"plugins":["theme-comscore","prism","-highlight","copy-code-button","search-pro","-search","-lunr","expandable-chapters","splitter","-sharing","tbfed-pagefooter","anchor-navigation-ex"],"styles":{},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright &copy YoungGary 2019","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"prism":{"css":["prismjs/themes/prism-solarizedlight.css"],"lang":{"shell":"bash"}},"splitter":{},"search-pro":{},"fontsettings":{"theme":"white","family":"sans","size":2},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showGoTop":true,"showLevel":false},"theme-comscore":{},"copy-code-button":{},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"theme":"default","author":"Gary","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"Gary的小窝","language":"zh-hans","gitbook":"*","description":"Gary的小窝. 里面包含了个人撰写的技术文章"},"file":{"path":"flutter/widget1.md","mtime":"2019-11-23T06:05:42.906Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2019-11-24T12:41:43.196Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-copy-code-button/toggle.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-theme-comscore/test.js"></script>
+        
+    
+
+    </body>
+</html>
+

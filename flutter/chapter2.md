@@ -1,5 +1,5 @@
 
-# Flutter 技术总结  
+# Flutter 技术总结分享
 
 ## 前言
 
@@ -13,8 +13,148 @@ Flutter是由原 Google Chrome 团队成员，利用 Chrome 2D 渲染引擎，�
 ![1.jpg](https://i.loli.net/2019/11/17/AnBwTMHOFsdvREx.png)
 * Flutter 在各个原生的平台中，使用自己的 C++的引擎渲染界面，没有使用 webview，也不像 RN、NativeScript 一样使用系统的组件。简单来说平台只是给 Flutter 提供一个画布。
 * 界面使用 Dart 语言开发，貌似唯一支持 JIT（Just-In-Time），和 AOT （Ahead-Of-Time）模式的强类型语言。
-* 写法非常的现代，声明式，组件化，Composition > inheritance，响应式……就是现在前端流行的这一套 :smile:
+* 写法非常的现代，声明式，组件化，Composition > inheritance，响应式……就是现在前端流行的这一套
 * 一套代码搞定所有平台。
+
+## 移动开发技术简介
+
+先主要介绍一下移动开发技术的进化历程，主要是想让读者知道Flutter技术出现的背景。笔者认为，了解一门新技术出现的背景是非常重要的，因为只有了解之前是什么样的，才能理解为什么会是现在这样。
+
+### 原生开发与跨平台技术
+
+原生开发
+
+原生应用程序是指某一个移动平台（比如iOS或安卓）所特有的应用，使用相应平台支持的开发工具和语言，并直接调用系统提供的SDK API。比如Android原生应用就是指使用Java或Kotlin语言直接调用Android SDK开发的应用程序；而iOS原生应用就是指通过Objective-C或Swift语言直接调用iOS SDK开发的应用程序。原生开发有以下主要优势：
+* 可访问平台全部功能（GPS、摄像头）；
+* 速度快、性能高、可以实现复杂动画及绘制，整体用户体验好；
+
+主要缺点：
+
+* 平台特定，开发成本高；不同平台必须维护不同代码，人力成本随之变大；
+* 内容固定，动态化弱，大多数情况下，有新功能更新时只能发版；
+
+在移动互联网发展初期，业务场景并不复杂，原生开发还可以应对产品需求迭代。 但近几年，随着物联网时代到来、移动互联网高歌猛进，日新月异，在很多业务场景中，传统的纯原生开发已经不能满足日益增长的业务需求。主要表现在：
+
+* 动态化内容需求增大；当需求发生变化时，纯原生应用需要通过版本升级来更新内容，但应用上架、审核是需要周期的，这对高速变化的互联网时代来说是很难接受的，所以，对应用动态化(不发版也可以更新应用内容)的需求就变的迫在眉睫。
+* 业务需求变化快，开发成本变大；由于原生开发一般都要维护Android、iOS两个开发团队，版本迭代时，无论人力成本，还是测试成本都会变大。
+
+总结一下，纯原生开发主要面临动态化和开发成本两个问题，而针对这两个问题，诞生了一些跨平台的动态化框架。
+
+### 跨平台技术简介
+
+针对原生开发面临问题，人们一直都在努力寻找好的解决方案，而时至今日，已经有很多跨平台框架(注意，本书中所指的“跨平台”若无特殊说明，即特指Android和iOS两个平台)，根据其原理，主要分为三类：
+
+* H5+原生（Cordova、Ionic、微信小程序）
+* JavaScript开发+原生渲染 （React Native、Weex、快应用）
+* 自绘UI+原生(QT for mobile、Flutter)
+
+#### H5+原生混合开发
+
+这类框架主要原理就是将APP的一部分需要动态变动的内容通过H5来实现，通过原生的网页加载控件WebView (Android)或WKWebView（iOS）来加载（以后若无特殊说明，我们用WebView来统一指代android和iOS中的网页加载控件）。这样以来，H5部分是可以随时改变而不用发版，动态化需求能满足；同时，由于h5代码只需要一次开发，就能同时在Android和iOS两个平台运行，这也可以减小开发成本，也就是说，H5部分功能越多，开发成本就越小。我们称这种h5+原生的开发模式为混合开发 ，采用混合模式开发的APP我们称之为混合应用或Hybrid APP ，如果一个应用的大多数功能都是H5实现的话，我们称其为Web APP 。
+
+目前混合开发框架的典型代表有：Cordova、Ionic 和微信小程序，值得一提的是微信小程序目前是在webview中渲染的，并非原生渲染，但将来有可能会采用原生渲染。
+
+原理
+
+如之前所述，原生开发可以访问平台所有功能，而混合开发中，H5代码是运行在WebView中，而WebView实质上就是一个浏览器内核，其JavaScript依然运行在一个权限受限的沙箱中，所以对于大多数系统能力都没有访问权限，如无法访问文件系统、不能使用蓝牙等。所以，对于H5不能实现的功能，都需要原生去做。而混合框架一般都会在原生代码中预先实现一些访问系统能力的API， 然后暴露给WebView以供JavaScript调用，这样一来，WebView就成为了JavaScript与原生API之间通信的桥梁，主要负责JavaScript与原生之间传递调用消息，而消息的传递必须遵守一个标准的协议，它规定了消息的格式与含义，我们把依赖于WebView的用于在JavaScript与原生之间通信并实现了某种消息传输协议的工具称之为WebView JavaScript Bridge, 简称 JsBridge，它也是混合开发框架的核心。
+
+>示例：JavaScript调用原生API获取手机型号
+
+我们以Android为例，实现一个获取手机型号的原生API供JavaScript调用。在这个示例中将展示JavaScript调用原生API的流程，可以直观的感受一下调用流程。我们选用在Github上开源的dsBridge作为JsBridge来进行通信。dsBridge是一个支持同步调用的跨平台的JsBridge，此示例中只使用其同步调用功能。
+
+* 首先在原生中实现获取手机型号的API getPhoneModel
+``` java
+class JSAPI {
+
+ @JavascriptInterface
+ public Object getPhoneModel(Object msg) {
+
+   return Build.MODEL;
+
+ }
+}
+```
+* 将原生API通过WebView注册到JsBridge中
+``` java
+import wendu.dsbridge.DWebView
+...
+//DWebView继承自WebView，由dsBridge提供  
+DWebView dwebView = (DWebView) findViewById(R.id.dwebview);
+//注册原生API到JsBridge
+dwebView.addJavascriptObject(new JsAPI(), null);
+```
+* 在JavaScript中调用原生API
+
+``` javascript
+var dsBridge = require("dsbridge")
+//直接调用原生API `getPhoneModel`
+var model = dsBridge.call("getPhoneModel");
+//打印机型
+console.log(model);
+```
+上面示例演示了JavaScript调用原生API的过程，同样的，一般来说优秀的JsBridge也支持原生调用JavaScript，dsBridge也是支持的，如果您感兴趣，可以去github dsBridge项目主页查看。
+
+现在，我们回头来看一下，混合应用无非就是在第一步中预先实现一系列API供JavaScript调用，让JavaScript有访问系统的能力，看到这里，我相信你也可以自己实现一个混合开发框架了。
+
+总结
+
+混合应用的优点是动态内容是H5，web技术栈，社区及资源丰富，缺点是性能不好，对于复杂用户界面或动画，WebView不堪重任。
+
+#### JavaScript开发+原生渲染
+
+主要介绍一下 JavaScript开发+原生渲染的跨平台框架原理。
+
+React Native (简称RN)是Facebook于2015年4月开源的跨平台移动应用开发框架，是Facebook早先开源的JS框架 React 在原生移动应用平台的衍生产物，目前支持iOS和Android两个平台。RN使用Javascript语言，类似于HTML的JSX，以及CSS来开发移动应用，因此熟悉Web前端开发的技术人员只需很少的学习就可以进入移动应用开发领域。
+
+由于RN和React原理相通，并且Flutter也是受React启发，很多思想也都是相通的，万丈高楼平地起，我们有必要深入了解一下React原理。React是一个响应式的Web框架，我们先了解一下两个重要的概念：DOM树与响应式编程。
+
+#### DOM树与控件树
+
+文档对象模型（Document Object Model，简称DOM），是W3C组织推荐的处理可扩展标志语言的标准编程接口，一种独立于平台和语言的方式访问和修改一个文档的内容和结构。换句话说，这是表示和处理一个HTML或XML文档的标准接口。简单来说，DOM就是文档树，与用户界面控件树对应，在前端开发中通常指HTML对应的渲染树，但广义的DOM也可以指Android中的XML布局文件对应的控件树，而术语DOM操作就是指直接来操作渲染树（或控件树）， 因此，可以看到其实DOM树和控件树是等价的概念，只不过前者常用于Web开发中，而后者常用于原生开发中。
+
+#### 响应式编程
+
+React中提出一个重要思想：状态改变则UI随之自动改变，而React框架本身就是响应用户状态改变的事件而执行重新构建用户界面的工作，这就是典型的响应式编程范式，下面我们总结一下React中响应式原理：
+
+* 开发者只需关注状态转移（数据），当状态发生变化，React框架会自动根据新的状态重新构建UI。
+* React框架在接收到用户状态改变通知后，会根据当前渲染树，结合最新的状态改变，通过Diff算法，计算出树中变化的部分，然后只更新变化的部分（DOM操作），从而避免整棵树重构，提高性能。
+
+值得注意的是，在第二步中，状态变化后React框架并不会立即去计算并渲染DOM树的变化部分，相反，React会在DOM的基础上建立一个抽象层，即虚拟DOM树，对数据和状态所做的任何改动，都会被自动且高效的同步到虚拟DOM，最后再批量同步到真实DOM中，而不是每次改变都去操作一下DOM。为什么不能每次改变都直接去操作DOM树？这是因为在浏览器中每一次DOM操作都有可能引起浏览器的重绘或回流：
+
+* 如果DOM只是外观风格发生变化，如颜色变化，会导致浏览器重绘界面。
+* 如果DOM树的结构发生变化，如尺寸、布局、节点隐藏等导致，浏览器就需要回流（及重新排版布局）。
+
+而浏览器的重绘和回流都是比较昂贵的操作，如果每一次改变都直接对DOM进行操作，这会带来性能问题，而批量操作只会触发一次DOM更新。
+
+#### React Native
+
+上文已经提到React Native 是React 在原生移动应用平台的衍生产物，那两者主要的区别是什么呢？其实，主要的区别在于虚拟DOM映射的对象是什么？React中虚拟DOM最终会映射为浏览器DOM树，而RN中虚拟DOM会通过 JavaScriptCore 映射为原生控件树。
+
+JavaScriptCore 是一个JavaScript解释器，它在React Native中主要有两个作用：
+
+* 为JavaScript提供运行环境。
+* 是JavaScript与原生应用之间通信的桥梁，作用和JsBridge一样，事实上，在iOS中，很多JsBridge的实现都是基于 JavaScriptCore 。
+
+而RN中将虚拟DOM映射为原生控件的过程中分两步：
+
+* 布局消息传递； 将虚拟DOM布局信息传递给原生；
+* 原生根据布局信息通过对应的原生控件渲染控件树；
+
+至此，React Native 便实现了跨平台。 相对于混合应用，由于React Native是原生控件渲染，所以性能会比混合应用中H5好很多，同时React Native使用了Web开发技术栈，也只需维护一份代码，同样是跨平台框架。
+
+#### 总结
+
+JavaScript开发+原生渲染的方式主要优点如下：
+
+* 采用Web开发技术栈，社区庞大、上手快、开发成本相对较低。
+* 原生渲染，性能相比H5提高很多。
+* 动态化较好，支持热更新。
+
+不足：
+
+* 渲染时需要JavaScript和原生之间通信，在有些场景如拖动可能会因为通信频繁导致卡顿。
+* JavaScript为脚本语言，执行时需要JIT(Just In Time)，执行效率和AOT(Ahead Of Time)代码仍有差距。
+* 由于渲染依赖原生控件，不同平台的控件需要单独维护，并且当系统更新时，社区控件可能会滞后；除此之外，其控件系统也会受到原生UI系统限制，例如，在Android中，手势冲突消歧规则是固定的，这在使用不同人写的控件嵌套时，手势冲突问题将会变得非常棘手。
 
 ## Flutter 为什么快？Flutter 相比 RN 的优势在哪里？
 从架构中实际上已经能看出 Flutter 为什么快，至少相比之前的当红炸子鸡 React Native 快的原因了。
@@ -124,7 +264,92 @@ void main() {
 ```
 这点在 diff 对象的时候尤其有用。
 
-### lsolate
+## dart中的异步支持
+
+Dart类库有非常多的返回Future或者Stream对象的函数。 这些函数被称为异步函数：它们只会在设置好一些耗时操作之后返回，比如像 IO操作。而不是等到这个操作完成。
+
+async和await关键词支持了异步编程，允许您写出和同步代码很像的异步代码。
+
+### Future
+
+Future与JavaScript中的Promise非常相似，表示一个异步操作的最终完成（或失败）及其结果值的表示。简单来说，它就是用于处理异步操作的，异步处理成功了就执行成功的操作，异步处理失败了就捕获错误或者停止后续操作。一个Future只会对应一个结果，要么成功，要么失败。
+
+由于本身功能较多，这里我们只介绍其常用的API及特性。还有，请记住，Future 的所有API的返回值仍然是一个Future对象，所以可以很方便的进行链式调用。
+
+### Future.then
+
+为了方便示例，在本例中我们使用Future.delayed 创建了一个延时任务（实际场景会是一个真正的耗时任务，比如一次网络请求），即2秒后返回结果字符串"hi world!"，然后我们在then中接收异步结果并打印结果，代码如下：
+``` dart
+Future.delayed(new Duration(seconds: 2),(){
+   return "hi world!";
+}).then((data){
+   print(data);
+});
+```
+### Future.catchError
+如果异步任务发生错误，我们可以在catchError中捕获错误，我们将上面示例改为：
+``` dart
+Future.delayed(new Duration(seconds: 2),(){
+   //return "hi world!";
+   throw AssertionError("Error");  
+}).then((data){
+   //执行成功会走到这里  
+   print("success");
+}).catchError((e){
+   //执行失败会走到这里  
+   print(e);
+});
+```
+在本示例中，我们在异步任务中抛出了一个异常，then的回调函数将不会被执行，取而代之的是 catchError回调函数将被调用；但是，并不是只有 catchError回调才能捕获错误，then方法还有一个可选参数onError，我们也可以它来捕获异常：
+``` dart
+Future.delayed(new Duration(seconds: 2), () {
+    //return "hi world!";
+    throw AssertionError("Error");
+}).then((data) {
+    print("success");
+}, onError: (e) {
+    print(e);
+});
+```
+### Future.whenComplete
+有些时候，我们会遇到无论异步任务执行成功或失败都需要做一些事的场景，比如在网络请求前弹出加载对话框，在请求结束后关闭对话框。这种场景，有两种方法，第一种是分别在then或catch中关闭一下对话框，第二种就是使用Future的whenComplete回调，我们将上面示例改一下：
+
+``` dart
+Future.delayed(new Duration(seconds: 2),(){
+   //return "hi world!";
+   throw AssertionError("Error");
+}).then((data){
+   //执行成功会走到这里 
+   print(data);
+}).catchError((e){
+   //执行失败会走到这里   
+   print(e);
+}).whenComplete((){
+   //无论成功或失败都会走到这里
+});
+```
+
+### Future.wait
+有些时候，我们需要等待多个异步任务都执行结束后才进行一些操作，比如我们有一个界面，需要先分别从两个网络接口获取数据，获取成功后，我们需要将两个接口数据进行特定的处理后再显示到UI界面上，应该怎么做？答案是Future.wait，它接受一个Future数组参数，只有数组中所有Future都执行成功后，才会触发then的成功回调，只要有一个Future执行失败，就会触发错误回调。下面，我们通过模拟Future.delayed 来模拟两个数据获取的异步任务，等两个异步任务都执行成功时，将两个异步任务的结果拼接打印出来，代码如下：
+``` dart
+Future.wait([
+  // 2秒后返回结果  
+  Future.delayed(new Duration(seconds: 2), () {
+    return "hello";
+  }),
+  // 4秒后返回结果  
+  Future.delayed(new Duration(seconds: 4), () {
+    return " world";
+  })
+]).then((results){
+  print(results[0]+results[1]);
+}).catchError((e){
+  print(e);
+});
+```
+执行上面代码，4秒后你会在控制台中看到“hello world”。
+
+<!-- ### lsolate
 
 Dart 运行在独立隔离的 iSolate 中就类似 JavaScript 一样，单线程事件驱动，但是 Dart 也开放了创建其他 isolate，充分利用 CPU 的多和能力。
 
@@ -171,7 +396,7 @@ Future sendReceive(SendPort sendPort, String url) {
 
 ```
 
-当然 Flutter 中封装了[compute](https://api.flutter.dev/flutter/foundation/compute.html)，可以方便的使用，譬如[在其它 isolate 中解析大的 json](https://flutter.dev/docs/cookbook/networking/background-parsing)。
+当然 Flutter 中封装了[compute](https://api.flutter.dev/flutter/foundation/compute.html)，可以方便的使用，譬如[在其它 isolate 中解析大的 json](https://flutter.dev/docs/cookbook/networking/background-parsing)。 -->
 
 ### Dart UI as Code
 
@@ -524,6 +749,149 @@ class TimerView extends StatelessWidget {
 
 到这里，主要的部分已经总结完了，有这些已经可以开发出一个不错的 App 了。
 
+## 与后端的通信
+
+### 1 通过HttpClient发起HTTP请求
+
+Dart IO库中提供了用于发起Http请求的一些类，我们可以直接使用HttpClient来发起请求。使用HttpClient发起请求分为五步：
+
+* 创建一个HttpClient：
+
+``` dart
+ HttpClient httpClient = new HttpClient();
+```
+
+* 打开Http连接，设置请求头：
+
+``` dart
+HttpClientRequest request = await httpClient.getUrl(uri);
+```
+这一步可以使用任意Http Method，如httpClient.post(...)、httpClient.delete(...)等。如果包含Query参数，可以在构建uri时添加，如：
+``` dart
+Uri uri=Uri(scheme: "https", host: "flutterchina.club", queryParameters: {
+    "xx":"xx",
+    "yy":"dd"
+  });
+```
+通过HttpClientRequest可以设置请求header，如：
+``` dart
+request.headers.add("user-agent", "test");
+```
+如果是post或put等可以携带请求体方法，可以通过HttpClientRequest对象发送request body，如：
+``` dart
+String payload="...";
+request.add(utf8.encode(payload)); 
+//request.addStream(_inputStream); //可以直接添加输入流
+```
+* 等待连接服务器：
+``` dart
+HttpClientResponse response = await request.close();
+```
+这一步完成后，请求信息就已经发送给服务器了，返回一个HttpClientResponse对象，它包含响应头（header）和响应流(响应体的Stream)，接下来就可以通过读取响应流来获取响应内容。
+* 读取响应内容：
+``` dart
+String responseBody = await response.transform(utf8.decoder).join();
+```
+我们通过读取响应流来获取服务器返回的数据，在读取时我们可以设置编码格式，这里是utf8。
+
+* 请求结束，关闭HttpClient：
+``` dart
+httpClient.close();
+```
+关闭client后，通过该client发起的所有请求都会中止。
+
+### 2.Http请求-Dio http库
+
+通过上一节介绍，我们可以发现直接使用HttpClient发起网络请求是比较麻烦的，很多事情得我们手动处理，如果再涉及到文件上传/下载、Cookie管理等就会非常繁琐。幸运的是，Dart社区有一些第三方http请求库，用它们来发起http请求将会简单的多，本节我们介绍一下目前人气较高的[dio](https://github.com/flutterchina/dio)库。
+
+>dio是一个强大的Dart Http请求库，支持Restful API、FormData、拦截器、请求取消、Cookie管理、文件上传/下载、超时等。dio的使用方式随着其版本升级可能会发生变化，如果本节所述内容和dio官方有差异，请以dio官方文档为准。
+
+#### 引入
+引入dio:
+``` dart
+dependencies:
+  dio: ^x.x.x #请使用pub上的最新版本
+```
+导入并创建dio实例：
+``` dart
+import 'package:dio/dio.dart';
+Dio dio =  Dio();
+```
+接下来就可以通过 dio实例来发起网络请求了，注意，一个dio实例可以发起多个http请求，一般来说，APP只有一个http数据源时，dio应该使用单例模式。
+
+>GET请求
+
+``` dart
+Response response;
+response=await dio.get("/test?id=12&name=wendu")
+print(response.data.toString());
+```
+带参数
+``` dart
+response=await dio.get("/test",queryParameters:{"id":12,"name":"wendu"})
+print(response);
+```
+多个并发请求
+``` dart
+response= await Future.wait([dio.post("/info"),dio.get("/token")]);
+```
+下载文件:
+``` dart
+response=await dio.download("https://www.google.com/",_savePath);
+```
+发送 FormData:
+``` dart
+FormData formData = new FormData.from({
+   "name": "wendux",
+   "age": 25,
+});
+response = await dio.post("/info", data: formData)
+```
+案例
+
+我们通过Github开放的API来请求flutterchina组织下的所有公开的开源项目，实现：
+
+* 在请求阶段弹出loading
+* 请求结束后，如果请求失败，则展示错误信息；如果成功，则将项目名称列表展示出来。
+代码如下：
+``` dart
+class _FutureBuilderRouteState extends State<FutureBuilderRoute> {
+  Dio _dio = new Dio();
+
+  @override
+  Widget build(BuildContext context) {
+
+    return new Container(
+      alignment: Alignment.center,
+      child: FutureBuilder(
+          future: _dio.get("https://api.github.com/orgs/flutterchina/repos"),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            //请求完成
+            if (snapshot.connectionState == ConnectionState.done) {
+              Response response = snapshot.data;
+              //发生错误
+              if (snapshot.hasError) {
+                return Text(snapshot.error.toString());
+              }
+              //请求成功，通过项目信息构建用于显示项目名称的ListView
+              return ListView(
+                children: response.data.map<Widget>((e) =>
+                    ListTile(title: Text(e["full_name"]))
+                ).toList(),
+              );
+            }
+            //请求未完成时弹出loading
+            return CircularProgressIndicator();
+          }
+      ),
+    );
+  }
+}
+```
+
+
+
+
 ## 测试
 
 Flutter debugger，测试都是出场自带，用起来也不难。
@@ -622,9 +990,49 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 ```
 ## 使用原生能力
 
-和 ReactNative 类似，Flutter 也是使用类似事件的机制来使用平台相关能力
+由于Flutter本身只是一个UI系统，它本身是无法提供一些系统能力，比如使用蓝牙、相机、GPS等，因此要在Flutter APP中调用这些能力就必须和原生平台进行通信。为此，Flutter中提供了一个平台通道（platform channel），用于Flutter和原生平台的通信。平台通道正是Flutter和原生之间通信的桥梁，它也是Flutter插件的底层基础设施。
+
+Flutter使用了一个灵活的系统，允许您调用特定平台的API，无论在Android上的Java或Kotlin代码中，还是iOS上的ObjectiveC或Swift代码中均可用。
+
+Flutter与原生之间的通信依赖灵活的消息传递方式：
+
+* 应用的Flutter部分通过平台通道（platform channel）将消息发送到其应用程序的所在的宿主（iOS或Android）应用（原生应用）。
+* 宿主监听平台通道，并接收该消息。然后它会调用该平台的API，并将响应发送回客户端，即应用程序的Flutter部分。
+
+使用平台通道在Flutter(client)和原生(host)之间传递消息，如下图所示：
 
 ![7.jpg](https://i.loli.net/2019/11/17/dxeyFgozOifRMHP.png)
+
+当在Flutter中调用原生方法时，调用信息通过平台通道传递到原生，原生收到调用信息后方可执行指定的操作，如需返回数据，则原生会将数据再通过平台通道传递给Flutter。值得注意的是消息传递是异步的，这确保了用户界面在消息传递时不会被挂起。
+
+在客户端，[MethodChannel API](https://docs.flutter.io/flutter/services/MethodChannel-class.html) 可以发送与方法调用相对应的消息。 在宿主平台上，MethodChannel 在[Android API](https://docs.flutter.io/javadoc/io/flutter/plugin/common/MethodChannel.html) 和 [FlutterMethodChannel iOS API](https://docs.flutter.io/objcdoc/Classes/FlutterMethodChannel.html)可以接收方法调用并返回结果。这些类可以帮助我们用很少的代码就能开发平台插件。
+
+>注意: 如果需要，方法调用(消息传递)可以是反向的，即宿主作为客户端调用Dart中实现的API。 quick_actions插件就是一个具体的例子。
+
+### 如何获取平台信息
+
+Flutter 中提供了一个全局变量defaultTargetPlatform来获取当前应用的平台信息，defaultTargetPlatform定义在"platform.dart"中，它的类型是TargetPlatform，这是一个枚举类，定义如下：
+``` dart
+enum TargetPlatform {
+  android,
+  fuchsia,
+  iOS,
+}
+```
+可以看到目前Flutter只支持这三个平台。我们可以通过如下代码判断平台：
+``` dart
+if(defaultTargetPlatform==TargetPlatform.android){
+  // 是安卓系统，do something
+  ...
+}
+...
+```
+由于不同平台有它们各自的交互规范，Flutter Material库中的一些组件都针对相应的平台做了一些适配，比如路由组件MaterialPageRoute，它在android和ios中会应用各自平台规范的切换动画。那如果我们想让我们的APP在所有平台都表现一致，比如希望在所有平台路由切换动画都按照ios平台一致的左右滑动切换风格该怎么做？Flutter中提供了一种覆盖默认平台的机制，我们可以通过显式指定debugDefaultTargetPlatformOverride全局变量的值来指定应用平台。比如：
+``` dart
+debugDefaultTargetPlatformOverride=TargetPlatform.iOS;
+print(defaultTargetPlatform); // 会输出TargetPlatform.iOS
+```
+上面代码即在Android中运行后，Flutter APP就会认为是当前系统是iOS，Material组件库中所有组件交互方式都会和iOS平台对齐，defaultTargetPlatform的值也会变为TargetPlatform.iOS。
 
 ## Flutter Web, Flutter Desktop
 
